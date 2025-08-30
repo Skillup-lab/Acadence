@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acadence - knowledge with no Borders</title>
+   <meta name="description" content="Acadence is a global EdTech platform connecting learners, educators, and skilled individuals. Gain job-ready skills, teach with powerful tools, and share knowledge without borders.">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/webp" href="images/logo.webp">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: 'navy',
+                        purple: '#6C2DC7',
+                         purpl: 'purple',
+                        accent: 'white',
+                        nav:'gainsboro'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .testimonial {
+            display: none;
+        }
+        
+        .testimonial.active {
+            display: block;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0A1D37 0%, #6C2DC7 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(108, 45, 199, 0.2);
+        }
+        
+        .logo {
+            height: 30%;
+            width: 100px;
+            margin-top: 20px;
+        }
+        .nav a{
+            margin-top: 27px;
+            font-size: 17px;
+        }
+        .nav button{
+               margin-top: 27px;
+            font-size: 14px;
+        }
+        nav{
+            height: 15%;
+        }
+        .cta{
+            margin: 17px;
+            border-radius: 30%;
+            border: 2px solid white;
+        }
+         @media (max-width: 768px){
+nav{
+    height: 14%;
+}
+#mobile-menu-btn{
+    margin-top: 42px;
+         }
+         #mobile-menu a{
+font-size: 1.8rem;
+         }
+                  #mobile-menu button{
+font-size: 1rem;
+         }
+         .logo{
+            margin-left: 20px;
+            margin-top: 30px;
+         }
+         .home-right{
+            display: none;
+         }
+         #home{
+            background: url(images/test2.webp);
+            background-repeat: no-repeat;
+            background-size: cover;
+         }
+     
+        }
+    </style>
+</head>
+<body class="bg-accent text-navy">
+    <!-- Navigation -->
+    <nav class="bg-accent shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-accent"><img class="logo" src="images/logo.webp" alt=""></h1>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 nav">
+                    <div class="flex items-baseline space-x-4">
+                        <a href="index.html" class="text-navy hover:text-purple px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="student.html" class="text-navy hover:text-purple px-3 py-2 rounded-md text-sm font-medium transition-colors">Learners</a>
+                        <a href="teacher.html" class="text-navy hover:text-purple px-3 py-2 rounded-md text-sm font-medium transition-colors">Tutor</a>
+                        <a href="partner.html" class="text-navy hover:text-purple px-3 py-2 rounded-md text-sm font-medium transition-colors">NGO Hub</a>
+                           <a href="contact.html" class="text-navy hover:text-purple px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                    <div class="flex items-center space-x-3 ml-6">
+                        <button class="text-navy hover:text-purple px-4 py-2 rounded-md text-sm font-medium transition-colors border border-navy/30"><a href="login.html">Log in</a></button>
+                        <button class="bg-purple hover:bg-purple/90 text-accent px-4 py-2 rounded-md text-sm font-medium transition-colors"><a href="signup.html">Sign Up</a></button>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-navy hover:text-navy relative z-50">
+                        <svg id="hamburger-icon" class="h-8 w-8 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="close-icon" class="h-8 w-8 hidden transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu overlay -->
+        <div id="mobile-menu" class="md:hidden fixed inset-0 bg-accent/95 backdrop-blur-sm transform translate-x-full transition-transform duration-300 ease-in-out z-40">
+            <div class="flex flex-col justify-center items-center h-full space-y-8">
+                <a href="index.html" class="text-navy hover:text-purple text-2xl font-medium transition-colors mobile-nav-link">Home</a>
+                <a href="student.html" class="text-navy hover:text-purple text-2xl font-medium transition-colors mobile-nav-link">Learners</a>
+                <a href="teacher.html" class="text-navy hover:text-purple text-2xl font-medium transition-colors mobile-nav-link">Tutors</a>
+                <a href="partner.html" class="text-navy hover:text-purple text-2xl font-medium transition-colors mobile-nav-link">NGO Hub</a>
+  <a href="contact.html" class="text-navy hover:text-purple text-2xl font-medium transition-colors mobile-nav-link">Contact</a>
+                <div class="flex flex-col space-y-4 mt-8 mobilelog" style="display: inline;font-size: 30px;">
+                    <button class="text-navy hover:text-navy px-6 py-3 rounded-md text-xl font-medium transition-colors border border-purple" style="margin-right: 10px;"><a href="login.html">Log in</a></button>
+                    <button class="bg-navy hover:bg-navy/90 text-accent px-6 py-3 rounded-md text-lg font-medium transition-colors"><a href="signup.html">Sign Up</a></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="bg-navy min-h-screen flex items-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="slide-in-left">
+                    <h1 class="text-4xl md:text-6xl font-bold text-accent mb-6 leading-tight">
+                        Learn, Teach, Grow — All in One Place
+                    </h1>
+                    <p class="text-xl text-accent/90 mb-8 leading-relaxed">
+Acadence connects students, parents, teachers, and organizations to the best learning experiences – from private tutoring to online courses and community programs.                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-accent text-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent/90 transition-all transform hover:scale-105 shadow-lg">
+                            Join as Student
+                        </button>
+                        <button class="border-2 border-accent text-accent px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent hover:text-navy transition-all transform hover:scale-105">
+                            Join as Teacher
+                        </button>
+                    </div>
+                </div>
+                <div class="slide-in-right">
+                    <div class="relative home-right">
+                            <img src="images/herobg.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-navy mb-4">Why Choose Acadence?</h2>
+                <p class="text-xl text-navy/70 max-w-3xl mx-auto">Discover the features that make learning and teaching effortless and enjoyable</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border border-gray-100 fade-in">
+                    <div class="w-16 h-16 bg-purple/10 rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-purple" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-navy mb-3">Find Private Tutors</h3>
+                    <p class="text-navy/70">Connect with qualified tutors near you for personalized one-on-one learning experiences tailored to your needs.</p>
+                </div>
+                
+                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border border-gray-100 fade-in">
+                    <div class="w-16 h-16 bg-purple/10 rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-purple" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-navy mb-3">Learn Anytime</h3>
+                    <p class="text-navy/70">Access courses and materials 24/7. Learn at your own pace, whenever and wherever it's convenient for you.</p>
+                </div>
+                
+                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border border-gray-100 fade-in">
+                    <div class="w-16 h-16 bg-purple/10 rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-purple" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-navy mb-3">Teach Online</h3>
+                    <p class="text-navy/70">Share your expertise with students worldwide. Create courses, host live sessions, build your teaching career and Earn.</p>
+                </div>
+                
+                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border border-gray-100 fade-in">
+                    <div class="w-16 h-16 bg-purple/10 rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-purple" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-navy mb-3">NGO Learning Hubs</h3>
+                    <p class="text-navy/70">We Partner with NGOs and Training Institution to provide accessible education to underserved communities and make learning inclusive for all.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-navy">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-accent mb-4">How It Works</h2>
+                <p class="text-xl text-accent/70 max-w-3xl mx-auto">Get started in three simple steps</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="text-center fade-in">
+                    <div class="w-20 h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-navy">1</span>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-accent mb-4">Sign Up</h3>
+                    <p class="text-accent/70 text-lg">Create your account and tell us whether you want to learn, teach, or both. It takes less than 2 minutes.</p>
+                </div>
+                
+                <div class="text-center fade-in">
+                    <div class="w-20 h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-navy">2</span>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-accent mb-4">Learn or Teach</h3>
+                    <p class="text-accent/70 text-lg">Browse courses, connect with tutors, or create your own content. Start your educational journey immediately.</p>
+                </div>
+                
+                <div class="text-center fade-in">
+                    <div class="w-20 h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-navy">3</span>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-accent mb-4">Earn or Achieve</h3>
+                    <p class="text-accent/70 text-lg">Gain new skills and certifications as a student, or earn income sharing your expertise as a teacher.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-navy mb-4">What Our Users Say</h2>
+                <p class="text-xl text-navy/70 max-w-3xl mx-auto">Real stories from students and teachers who've transformed their learning journey</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div id="testimonial-container" class="relative">
+                    <div class="testimonial active  p-8 rounded-xl shadow-lg">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-purple rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl text-accent">👩‍🎓</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-navy">Sarah Johnson</h4>
+                                <p class="text-navy/70">Computer Science Student</p>
+                            </div>
+                        </div>
+                        <p class="text-lg text-navy/80 italic">"Acadence helped me find the perfect math tutor who explained complex concepts in a way I could finally understand. My grades improved dramatically, and I gained confidence in subjects I used to struggle with."</p>
+                    </div>
+                    
+                    <div class="testimonial p-8 rounded-xl shadow-lg">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-purple rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl text-accent">👨‍🏫</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-navy">Dr. Michael Chen</h4>
+                                <p class="text-navy/70">Physics Teacher</p>
+                            </div>
+                        </div>
+                        <p class="text-lg text-navy/80 italic">"As a teacher, Acadence gave me the platform to reach students globally. The tools are intuitive, and I've been able to create engaging content that truly makes a difference in my students' learning."</p>
+                    </div>
+                    
+                    <div class="testimonial bg-nav p-8 rounded-xl shadow-lg">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-purple rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl text-accent">👩‍💼</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-navy">Emily Rodriguez</h4>
+                                <p class="text-navy/70">Working Professional</p>
+                            </div>
+                        </div>
+                        <p class="text-lg text-navy/80 italic">"The flexibility of learning anytime, anywhere has been a game-changer for my career development. I completed three certifications while working full-time, thanks to Acadence's user-friendly platform."</p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-8 space-x-2">
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-navy opacity-50 transition-opacity" data-testimonial="0"></button>
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-navy opacity-50 transition-opacity" data-testimonial="1"></button>
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-navy opacity-50 transition-opacity" data-testimonial="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Footer -->
+    <section class="bg-navy py-20" id="cta">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+            <h2 class="text-4xl font-bold text-accent mb-6">Join Our Mission</h2>
+            <p class="text-xl text-accent/90 mb-8 max-w-3xl mx-auto">Be part of the movement to transform
+                education in Africa. Whether you're a teacher, student, NGOs, investor, or supporter, there's a place for you
+                in the Acadence community.</p>
+           <button class="bg-transparent text-accent px-6 py-3 rounded-lg font-semibold text-xl transition-all transform hover:scale-105 shadow-lg cta">
+                    Become a Teacher
+            </button>
+            <button class="bg-transparent text-accent px-6 py-3 rounded-lg font-semibold text-xl transition-all transform hover:scale-105 shadow-lg cta">
+                    Learn with Acadence
+            </button>
+            <button class="bg-transparent text-accent px-6 py-3 rounded-lg font-semibold text-xl transition-all transform hover:scale-105 shadow-lg cta">
+               Partner With Us
+            </button>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-20 px-6 bg-nav" id="contact">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-4xl font-bold mb-6 section-title animate-element">Get in Touch</h2>
+                    <p class="text-lg text-gray-600 mb-8 animate-element">Have questions or feedback? We'd love to hear
+                        from you. Our friendly team is here to help!</p>
+
+                    <div class="space-y-6 animate-element">
+                        <div class="flex items-start">
+                            <div class="bg-purple-100 rounded-full p-3 mr-4 text-purple-600">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">Our Headquarters</h3>
+                                <p class="text-gray-600">23 Salvatuion Road, Enugu, Nigeria</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-purple-100 rounded-full p-3 mr-4 text-purple-600">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">Email Us</h3>
+                                <p class="text-gray-600"><a href=" mailto:skillupteam.com@gmail.com">
+                                    skillupteam.com@gmail.com
+                                </a></p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-purple-100 rounded-full p-3 mr-4 text-purple-600">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">Call Us</h3>
+                                <p class="text-gray-600"><a href="tel:+111111111111111">+234 800 SKILL UP</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex space-x-4 animate-element">
+                        <a href="https://x.com/SkillUpnajia"
+                            class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center text-navy-600 hover:bg-purple-100 hover:text-purple-600 transition social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://web.facebook.com/profile.php?id=61578695518723"
+                            class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center text-navy-600 hover:bg-purple-100 hover:text-purple-600 transition social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/skillup_najia/"
+                            class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center text-navy-600 hover:bg-purple-100 hover:text-purple-600 transition social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/234XXXXXXXXXX"
+                            class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center text-navy-600 hover:bg-purple-100 hover:text-purple-600 transition social-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="p-8 rounded-xl shadow-lg animate-element" style="background:linear-gradient(navy, purple); color: white;">
+                    <h3 class="text-2xl font-bold mb-6">Send Us a Message</h3>
+                    <form action="">
+                        <div class="mb-4">
+                            <label for="name" class="block text-white-700 mb-2">Your Name</label>
+                            <input type="text" id="name"
+                                class="w-full px-4 py-3 border border-white-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="email" class="block text-white-700 mb-2">Your Email</label>
+                            <input type="email" id="email"
+                                class="w-full px-4 py-3 border border-white-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="subject" class="block text-white-700 mb-2">Subject</label>
+                            <input type="text" id="subject"
+                                class="w-full px-4 py-3 border border-white-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="message" class="block text-white-700 mb-2">Your Message</label>
+                            <textarea id="message" rows="4"
+                                class="w-full px-4 py-3 border border-white-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"></textarea>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition" style="background-color: navy;">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="bg-accent py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-navy mb-4">Acadence</h3>
+                    <p class="text-navy/70">Empowering education through technology and community.</p>
+                                        <div class="mt-4 flex space-x-2 animate-element">
+                        <a href="https://x.com/SkillUpnajia"
+                            class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center text-navy-600 hover:bg-purple-100 hover:text-purple-600 transition social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://web.facebook.com/profile.php?id=61578695518723"
+                            class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center text-navy-600 hover:bg-purple-100 hover:text-purple-600 transition social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/skillup_najia/"
+                            class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center text-navy-600 hover:bg-purple-100 hover:text-purple-600 transition social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/234XXXXXXXXXX"
+                            class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center text-navy-600 hover:bg-purple-100 hover:text-purple-600 transition social-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+
+                </div>
+                
+
+                <div>
+                    <h4 class="text-lg font-semibold text-navy mb-4">Quick links</h4>
+                     <ul class="space-y-2 text-navy/70">
+              <li><a href="index.html" class="hover:text-navy transition-colors">Home</a></li>
+                                 <li><a href="about.html" class="hover:text-navy transition-colors">About</a></li>
+                         <li><a href="student.html" class="hover:text-navy transition-colors">Learners</a></li>
+                         <li><a href="teacher.html" class="hover:text-navy transition-colors">Tutor</a></li>
+                        <li><a href="partner.html" class="hover:text-navy transition-colors">Institution Hub</a></li>
+                        <li><a href="contact.html" class="hover:text-navy transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold text-navy mb-4">Jump to</h4>
+                    <ul class="space-y-2 text-navy/70">
+                         <li><a href="#home" class="hover:text-navy transition-colors">Home</a></li>
+                        <li><a href="#features" class="hover:text-navy transition-colors">Features</a></li>
+                        <li><a href="#how-it-works" class="hover:text-navy transition-colors">How it Works</a></li>
+                        <li><a href="#testimonials" class="hover:text-navy transition-colors">Testimonials</a></li>
+                         <li><a href="#cta" class="hover:text-navy transition-colors">Links</a></li>
+                             <li><a href="#contact" class="hover:text-navy transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-navy/20 mt-8 pt-8 text-center">
+                <p class="text-navy/70">&copy; 2025 Acadence. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+        let isMenuOpen = false;
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenu.classList.add('translate-x-0');
+                hamburgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.remove('translate-x-0');
+                mobileMenu.classList.add('translate-x-full');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close mobile menu when clicking on nav links
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.remove('translate-x-0');
+                mobileMenu.classList.add('translate-x-full');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animation elements
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Testimonials slider
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        const dots = document.querySelectorAll('.testimonial-dot');
+
+        function showTestimonial(index) {
+            testimonials.forEach((testimonial, i) => {
+                testimonial.classList.toggle('active', i === index);
+            });
+            dots.forEach((dot, i) => {
+                dot.style.opacity = i === index ? '1' : '0.5';
+            });
+        }
+
+        // Auto-rotate testimonials
+        setInterval(() => {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }, 5000);
+
+        // Manual testimonial navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentTestimonial = index;
+                showTestimonial(currentTestimonial);
+            });
+        });
+
+        // Initialize first testimonial
+        showTestimonial(0);
+
+        // Add floating animation to hero illustration
+        const heroSvg = document.querySelector('#home svg');
+        if (heroSvg) {
+            setInterval(() => {
+                heroSvg.style.transform = `translateY(${Math.sin(Date.now() * 0.001) * 10}px)`;
+            }, 16);
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96f5b0e99682c418',t:'MTc1NTIyOTQ0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
