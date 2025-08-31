@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Login – Acadence Learning Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <meta name="description" content="Login to your Acadence account to access resources, dashboards, and opportunities as a learner, teacher, or NGO.">
 <meta name="keywords" content="Acadence login, sign in, education platform login, student login, teacher login, NGO login">
 
@@ -90,7 +91,7 @@
         <!-- Logo/Brand -->
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-navy mb-2">Acadence</h1>
-            <p class="text-gray-600">Empowering education for everyone</p>
+            <p class="text-gray-600">Your gateway to knowledge and opportunities.</p>
         </div>
 
         <!-- Main Card -->
@@ -131,7 +132,9 @@
                             <label class="role-card cursor-pointer transition-all duration-200">
                                 <input type="radio" name="loginRole" value="student" class="sr-only" onchange="selectRole(this)">
                                 <div class="p-4 border-2 border-gray-200 rounded-xl text-center">
-                                    <div class="text-2xl mb-2">🎓</div>
+                                  <div class="text-2xl mb-2 text-navy">
+  <i class="fas fa-user-graduate"></i>
+</div>
                                     <div class="text-sm font-medium text-gray-700">Student</div>
                                 </div>
                             </label>
@@ -139,7 +142,9 @@
                             <label class="role-card cursor-pointer transition-all duration-200">
                                 <input type="radio" name="loginRole" value="teacher" class="sr-only" onchange="selectRole(this)">
                                 <div class="p-4 border-2 border-gray-200 rounded-xl text-center">
-                                    <div class="text-2xl mb-2">👨‍🏫</div>
+                                 <div class="text-2xl mb-2 text-navy">
+  <i class="fas fa-chalkboard-teacher"></i>
+</div>
                                     <div class="text-sm font-medium text-gray-700">Teacher</div>
                                 </div>
                             </label>
@@ -147,7 +152,9 @@
                             <label class="role-card cursor-pointer transition-all duration-200">
                                 <input type="radio" name="loginRole" value="ngo" class="sr-only" onchange="selectRole(this)">
                                 <div class="p-4 border-2 border-gray-200 rounded-xl text-center">
-                                    <div class="text-2xl mb-2">🤝</div>
+                                   <div class="text-2xl mb-2 text-navy">
+  <i class="fas fa-handshake"></i>
+</div>
                                     <div class="text-sm font-medium text-gray-700">NGO</div>
                                 </div>
                             </label>
@@ -191,15 +198,19 @@
                             <label class="role-card cursor-pointer transition-all duration-200">
                                 <input type="radio" name="signupRole" value="student" class="sr-only" onchange="selectRole(this)">
                                 <div class="p-4 border-2 border-gray-200 rounded-xl text-center">
-                                    <div class="text-2xl mb-2">🎓</div>
-                                    <div class="text-sm font-medium text-gray-700">Student</div>
+                                                                    <div class="text-2xl mb-2 text-navy">
+  <i class="fas fa-user-graduate"></i>
+</div>
+  <div class="text-sm font-medium text-gray-700">Student</div>
                                 </div>
                             </label>
                             
                             <label class="role-card cursor-pointer transition-all duration-200">
                                 <input type="radio" name="signupRole" value="teacher" class="sr-only" onchange="selectRole(this)">
                                 <div class="p-4 border-2 border-gray-200 rounded-xl text-center">
-                                    <div class="text-2xl mb-2">👨‍🏫</div>
+                                                 <div class="text-2xl mb-2 text-navy">
+  <i class="fas fa-chalkboard-teacher"></i>
+</div>
                                     <div class="text-sm font-medium text-gray-700">Teacher</div>
                                 </div>
                             </label>
@@ -207,7 +218,9 @@
                             <label class="role-card cursor-pointer transition-all duration-200">
                                 <input type="radio" name="signupRole" value="ngo" class="sr-only" onchange="selectRole(this)">
                                 <div class="p-4 border-2 border-gray-200 rounded-xl text-center">
-                                    <div class="text-2xl mb-2">🤝</div>
+                                                           <div class="text-2xl mb-2 text-navy">
+  <i class="fas fa-handshake"></i>
+</div>
                                     <div class="text-sm font-medium text-gray-700">NGO</div>
                                 </div>
                             </label>
@@ -320,9 +333,16 @@
             // Scroll to success message
             successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            // Redirect after 2.5 seconds
+             // Redirect after 2.5 seconds
             setTimeout(() => {
-                window.location.href = `${role}-dashboard.html`;
+              // Redirect based on role
+    if (role === "student") {
+      window.location.href = "student/dashboard.html";
+    } else if (role === "teacher") {
+      window.location.href = "teacher/dashboard.html";
+    } else if (role === "ngo") {
+      window.location.href = "NGO/index.html";
+    }
             }, 2500);
         }
 
