@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Fundamentals - Acadence</title>
+       <meta name="description" content="Acadence is a global EdTech platform connecting learners, educators, and skilled individuals. Gain job-ready skills, teach with powerful tools, and share knowledge without borders.">
+
+    <link rel="icon" type="image/webp" href="images/logo.webp">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0A1D37',
+                        purple: '#6C2DC7',
+                        'purple-light': '#8B5CF6',
+                        'navy-light': '#1E3A8A'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Enhanced Dark/Light mode transitions */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        /* Dark mode specific enhancements */
+        .dark {
+            color-scheme: dark;
+        }
+        
+        /* Video Player Styling */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background: linear-gradient(135deg, #1F2937, #374151);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .video-player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #6C2DC7, #8B5CF6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .video-player:hover {
+            background: linear-gradient(135deg, #8B5CF6, #A855F7);
+            transform: scale(1.02);
+        }
+        
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .play-button:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+        
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 25px solid #6C2DC7;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            margin-left: 5px;
+        }
+        
+        /* Lesson List Styling */
+        .lesson-item {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .lesson-item:hover {
+            background-color: rgb(249 250 251);
+            border-left-color: #6C2DC7;
+        }
+        
+        .dark .lesson-item:hover {
+            background-color: rgb(55 65 81);
+        }
+        
+        .lesson-item.active {
+            background-color: rgb(239 246 255);
+            border-left-color: #6C2DC7;
+        }
+        
+        .dark .lesson-item.active {
+            background-color: rgb(30 58 138);
+        }
+        
+        .lesson-progress {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .lesson-completed {
+            background-color: #10B981;
+            color: white;
+        }
+        
+        .lesson-current {
+            background-color: #6C2DC7;
+            color: white;
+        }
+        
+        .lesson-locked {
+            background-color: #E5E7EB;
+            color: #9CA3AF;
+        }
+        
+        .dark .lesson-locked {
+            background-color: #4B5563;
+            color: #6B7280;
+        }
+        
+        /* Notes Section Styling */
+        .notes-editor {
+            min-height: 200px;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+        
+        .notes-editor:focus {
+            border-color: #6C2DC7;
+            box-shadow: 0 0 0 3px rgba(108, 45, 199, 0.1);
+        }
+        
+        /* Progress Bar */
+        .course-progress {
+            background: linear-gradient(90deg, #6C2DC7 0%, #8B5CF6 50%, #A855F7 100%);
+            height: 8px;
+            border-radius: 10px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        /* Sidebar Transitions */
+        .sidebar-transition {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Mobile Overlay */
+        .mobile-overlay {
+            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .dark .mobile-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        /* Theme Toggle Animation */
+        .theme-toggle {
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(180deg) scale(1.1);
+        }
+        
+        /* Quiz Button Animation */
+        .quiz-button {
+            background: linear-gradient(135deg, #10B981, #059669);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-button:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+        }
+        
+        .quiz-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .quiz-button:hover::before {
+            left: 100%;
+        }
+        
+        /* Rating Stars */
+        .star-rating {
+            display: flex;
+            align-items: center;
+        }
+        
+        .star {
+            color: #FCD34D;
+            font-size: 18px;
+        }
+        
+        /* Notification Styles */
+        .notification {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Video Controls */
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .video-container:hover .video-controls {
+            opacity: 1;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #6C2DC7;
+            width: 35%;
+            transition: width 0.3s ease;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .video-container {
+                padding-bottom: 60%;
+            }
+            
+            .play-button {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .play-icon {
+                border-left-width: 18px;
+                border-top-width: 12px;
+                border-bottom-width: 12px;
+            }
+        }
+        
+        /* Course completion celebration */
+        .completion-celebration {
+            animation: celebrate 0.6s ease-out;
+        }
+        
+        @keyframes celebrate {
+            0% { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(2deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        /* Auto-save indicator */
+        .save-indicator {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .save-indicator.show {
+            opacity: 1;
+        }
+        
+        /* Lesson duration badge */
+        .duration-badge {
+            background: rgba(108, 45, 199, 0.1);
+            color: #6C2DC7;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .dark .duration-badge {
+            background: rgba(139, 92, 246, 0.2);
+            color: #A855F7;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors">
+    <!-- Mobile Lesson List Overlay -->
+    <div id="mobile-overlay" class="fixed inset-0 mobile-overlay z-40 lg:hidden hidden"></div>
+    
+    <!-- Header -->
+    <header class="bg-navy dark:bg-gray-800 text-white shadow-lg sticky top-0 z-30">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Back Button & Course Info -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="p-2 rounded-lg hover:bg-navy-light dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold">JavaScript Fundamentals</h1>
+                        <div class="flex items-center space-x-4 mt-1">
+                            <div class="flex items-center space-x-2">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%236C2DC7'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EJS%3C/text%3E%3C/svg%3E" alt="Instructor" class="w-8 h-8 rounded-full">
+                                <span class="text-sm text-gray-300">Dr. Sarah Chen</span>
+                            </div>
+                            <div class="star-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="text-sm text-gray-300 ml-2">4.9 (2,847 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-3">
+                    <!-- Mobile Lesson List Toggle -->
+                    <button id="mobile-lessons-btn" class="lg:hidden p-2 rounded-lg hover:bg-navy-light dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="theme-toggle p-2 rounded-lg hover:bg-navy-light dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Course Progress -->
+                    <div class="hidden md:flex items-center space-x-3">
+                        <div class="text-right">
+                            <div class="text-sm font-semibold">8 of 12 lessons</div>
+                            <div class="text-xs text-gray-300">67% complete</div>
+                        </div>
+                        <div class="w-24 bg-navy-light rounded-full h-2">
+                            <div class="course-progress w-[67%] h-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Progress Bar -->
+            <div class="md:hidden mt-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium">Course Progress</span>
+                    <span class="text-sm">8/12 lessons (67%)</span>
+                </div>
+                <div class="w-full bg-navy-light rounded-full h-2">
+                    <div class="course-progress w-[67%] h-2"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="flex min-h-screen">
+        <!-- Lesson List Sidebar -->
+        <aside id="lesson-sidebar" class="sidebar-transition fixed lg:static top-0 left-0 h-full w-80 bg-white dark:bg-gray-800 shadow-lg border-r border-gray-200 dark:border-gray-700 z-20 transform -translate-x-full lg:translate-x-0 overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold text-navy dark:text-white">Course Content</h2>
+                    <button id="close-sidebar" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Course Stats -->
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 mb-6">
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <div class="text-2xl font-bold text-navy dark:text-white">12</div>
+                            <div class="text-xs text-gray-600 dark:text-gray-400">Lessons</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-navy dark:text-white">4.5h</div>
+                            <div class="text-xs text-gray-600 dark:text-gray-400">Duration</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-navy dark:text-white">8</div>
+                            <div class="text-xs text-gray-600 dark:text-gray-400">Completed</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lesson List -->
+                <div class="space-y-2">
+                    <!-- Section 1: Introduction -->
+                    <div class="mb-4">
+                        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Section 1: Introduction</h3>
+                        
+                        <div class="lesson-item p-3 rounded-lg cursor-pointer" data-lesson="1">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-completed">✓</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-navy dark:text-white">Welcome to JavaScript</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">12:30</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-item p-3 rounded-lg cursor-pointer" data-lesson="2">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-completed">✓</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-navy dark:text-white">Setting Up Your Environment</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">8:45</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-item p-3 rounded-lg cursor-pointer" data-lesson="3">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-completed">✓</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-navy dark:text-white">Your First JavaScript Program</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">15:20</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video + Exercise</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 2: Variables and Data Types -->
+                    <div class="mb-4">
+                        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Section 2: Variables & Data Types</h3>
+                        
+                        <div class="lesson-item p-3 rounded-lg cursor-pointer" data-lesson="4">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-completed">✓</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-navy dark:text-white">Understanding Variables</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">18:15</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-item p-3 rounded-lg cursor-pointer" data-lesson="5">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-completed">✓</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-navy dark:text-white">Primitive Data Types</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">22:30</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-item p-3 rounded-lg cursor-pointer" data-lesson="6">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-completed">✓</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-navy dark:text-white">Working with Strings</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">16:45</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video + Exercise</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 3: Control Structures -->
+                    <div class="mb-4">
+                        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Section 3: Control Structures</h3>
+                        
+                        <div class="lesson-item p-3 rounded-lg cursor-pointer" data-lesson="7">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-completed">✓</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-navy dark:text-white">Conditional Statements</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">20:10</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-item active p-3 rounded-lg cursor-pointer" data-lesson="8">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-current">8</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-navy dark:text-white">Loops and Iteration</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">25:30</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video + Exercise</span>
+                                        <span class="text-xs bg-purple text-white px-2 py-1 rounded-full">Current</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-item p-3 rounded-lg cursor-pointer" data-lesson="9">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-locked">🔒</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-500 dark:text-gray-400">Switch Statements</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">14:20</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 4: Functions -->
+                    <div class="mb-4">
+                        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Section 4: Functions</h3>
+                        
+                        <div class="lesson-item p-3 rounded-lg cursor-pointer" data-lesson="10">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-locked">🔒</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-500 dark:text-gray-400">Function Basics</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">19:45</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-item p-3 rounded-lg cursor-pointer" data-lesson="11">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-locked">🔒</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-500 dark:text-gray-400">Arrow Functions</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">17:30</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video + Exercise</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-item p-3 rounded-lg cursor-pointer" data-lesson="12">
+                            <div class="flex items-center space-x-3">
+                                <div class="lesson-progress lesson-locked">🔒</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-500 dark:text-gray-400">Scope and Closures</h4>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="duration-badge">23:15</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Video</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Section Quiz Button -->
+                <div class="mt-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-800">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-green-800 dark:text-green-200">Section 3 Quiz</h4>
+                            <p class="text-sm text-green-600 dark:text-green-300">Test your knowledge</p>
+                        </div>
+                    </div>
+                    <button id="quiz-btn" class="quiz-button w-full text-white font-semibold py-3 px-4 rounded-lg">
+                        🎯 Take Quiz (10 questions)
+                    </button>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content Area -->
+        <main class="flex-1 lg:ml-0">
+            <div class="container mx-auto px-4 py-6">
+                <!-- Current Lesson Info -->
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-navy dark:text-white mb-2">Lesson 8: Loops and Iteration</h2>
+                            <div class="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
+                                <span>📹 Video Lesson</span>
+                                <span>⏱️ 25:30 minutes</span>
+                                <span>📝 Includes Exercise</span>
+                                <span class="bg-purple/10 text-purple px-2 py-1 rounded-full">Section 3 of 4</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" title="Previous Lesson">
+                                <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                            </button>
+                            <button class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" title="Next Lesson">
+                                <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video Player -->
+                <div class="mb-8">
+                    <div class="video-container">
+                        <div class="video-player" id="video-player">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                            
+                            <!-- Video Controls -->
+                            <div class="video-controls">
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                                <div class="flex items-center justify-between text-white text-sm">
+                                    <div class="flex items-center space-x-4">
+                                        <button class="hover:text-purple transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1"></path>
+                                            </svg>
+                                        </button>
+                                        <span>8:45 / 25:30</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button class="hover:text-purple transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="hover:text-purple transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Video Description -->
+                    <div class="mt-4 p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                        <h3 class="font-semibold text-navy dark:text-white mb-2">📚 What you'll learn in this lesson:</h3>
+                        <ul class="text-gray-600 dark:text-gray-400 space-y-1">
+                            <li>• Understanding different types of loops (for, while, do-while)</li>
+                            <li>• When to use each type of loop</li>
+                            <li>• Loop control statements (break, continue)</li>
+                            <li>• Nested loops and performance considerations</li>
+                            <li>• Practical examples and common patterns</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Notes Section -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <h3 class="text-xl font-bold text-navy dark:text-white">📝 My Notes</h3>
+                            <div class="save-indicator text-sm text-green-600 dark:text-green-400">
+                                ✓ Auto-saved
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="clear-notes" class="text-sm text-red-600 hover:text-red-700 transition-colors">
+                                🗑️ Clear All
+                            </button>
+                            <button id="export-notes" class="text-sm text-purple hover:text-purple-light transition-colors">
+                                📤 Export
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <textarea 
+                        id="notes-editor" 
+                        class="notes-editor w-full p-4 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
+                        placeholder="Take notes while watching the lesson... Your notes are automatically saved!"
+                        rows="8"
+                    ></textarea>
+                    
+                    <!-- Notes Toolbar -->
+                    <div class="flex items-center justify-between mt-4">
+                        <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                            <span>💡 Tip: Use timestamps like [8:45] to mark important moments</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="add-timestamp" class="text-sm bg-purple text-white px-3 py-1 rounded-lg hover:bg-purple-light transition-colors">
+                                ⏰ Add Timestamp
+                            </button>
+                            <span class="text-sm text-gray-500 dark:text-gray-400" id="word-count">0 words</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lesson Navigation -->
+                <div class="mt-8 flex items-center justify-between">
+                    <button class="flex items-center space-x-2 px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        <span>Previous: Conditional Statements</span>
+                    </button>
+                    
+                    <button id="mark-complete" class="flex items-center space-x-2 px-6 py-3 bg-purple text-white rounded-lg hover:bg-purple-light transition-colors">
+                        <span>Mark as Complete</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                    </button>
+                    
+                    <button class="flex items-center space-x-2 px-6 py-3 bg-purple text-white rounded-lg hover:bg-purple-light transition-colors">
+                        <span>Next: Switch Statements</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Enhanced Theme Toggle Functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.classList.toggle('dark', currentTheme === 'dark');
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            
+            // Show theme change notification
+            const themeMessage = newTheme === 'dark' ? '🌙 Dark mode activated! Perfect for focused learning!' : '☀️ Light mode activated! Ready for bright studying!';
+            showNotification(themeMessage, 'success');
+        });
+        
+        // Mobile lesson sidebar functionality
+        const mobileLessonsBtn = document.getElementById('mobile-lessons-btn');
+        const lessonSidebar = document.getElementById('lesson-sidebar');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const closeSidebar = document.getElementById('close-sidebar');
+        
+        function toggleLessonSidebar() {
+            lessonSidebar.classList.toggle('-translate-x-full');
+            mobileOverlay.classList.toggle('hidden');
+        }
+        
+        mobileLessonsBtn.addEventListener('click', toggleLessonSidebar);
+        mobileOverlay.addEventListener('click', toggleLessonSidebar);
+        closeSidebar.addEventListener('click', toggleLessonSidebar);
+        
+        // Close sidebar on window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                lessonSidebar.classList.remove('-translate-x-full');
+                mobileOverlay.classList.add('hidden');
+            }
+        });
+        
+        // Video Player Functionality
+        const videoPlayer = document.getElementById('video-player');
+        const progressFill = document.querySelector('.progress-fill');
+        let isPlaying = false;
+        let currentTime = 8.75; // 8:45 in minutes
+        const totalTime = 25.5; // 25:30 in minutes
+        
+        videoPlayer.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            const playButton = videoPlayer.querySelector('.play-button');
+            
+            if (isPlaying) {
+                playButton.style.opacity = '0';
+                videoPlayer.style.background = 'linear-gradient(135deg, #1F2937, #374151)';
+                showNotification('▶️ Video playing! Take notes as you learn!', 'info');
+                
+                // Simulate video progress
+                const progressInterval = setInterval(() => {
+                    if (!isPlaying) {
+                        clearInterval(progressInterval);
+                        return;
+                    }
+                    
+                    currentTime += 0.1;
+                    const progressPercent = (currentTime / totalTime) * 100;
+                    progressFill.style.width = `${Math.min(progressPercent, 100)}%`;
+                    
+                    // Update time display
+                    const currentMinutes = Math.floor(currentTime);
+                    const currentSeconds = Math.floor((currentTime % 1) * 60);
+                    const timeDisplay = videoPlayer.querySelector('.video-controls span');
+                    if (timeDisplay) {
+                        timeDisplay.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')} / 25:30`;
+                    }
+                    
+                    if (currentTime >= totalTime) {
+                        clearInterval(progressInterval);
+                        isPlaying = false;
+                        playButton.style.opacity = '1';
+                        showNotification('🎉 Lesson completed! Ready to move to the next one?', 'success');
+                    }
+                }, 1000);
+            } else {
+                playButton.style.opacity = '1';
+                videoPlayer.style.background = 'linear-gradient(135deg, #6C2DC7, #8B5CF6)';
+                showNotification('⏸️ Video paused. Resume when ready!', 'info');
+            }
+        });
+        
+        // Notes Functionality
+        const notesEditor = document.getElementById('notes-editor');
+        const saveIndicator = document.querySelector('.save-indicator');
+        const wordCount = document.getElementById('word-count');
+        const addTimestamp = document.getElementById('add-timestamp');
+        const clearNotes = document.getElementById('clear-notes');
+        const exportNotes = document.getElementById('export-notes');
+        
+        // Load saved notes
+        const savedNotes = localStorage.getItem('lesson-8-notes') || '';
+        notesEditor.value = savedNotes;
+        updateWordCount();
+        
+        // Auto-save notes
+        let saveTimeout;
+        notesEditor.addEventListener('input', () => {
+            clearTimeout(saveTimeout);
+            saveIndicator.textContent = '💾 Saving...';
+            saveIndicator.classList.add('show');
+            
+            saveTimeout = setTimeout(() => {
+                localStorage.setItem('lesson-8-notes', notesEditor.value);
+                saveIndicator.textContent = '✓ Auto-saved';
+                updateWordCount();
+                
+                setTimeout(() => {
+                    saveIndicator.classList.remove('show');
+                }, 2000);
+            }, 1000);
+        });
+        
+        // Word count functionality
+        function updateWordCount() {
+            const words = notesEditor.value.trim().split(/\s+/).filter(word => word.length > 0);
+            wordCount.textContent = `${words.length} words`;
+        }
+        
+        // Add timestamp functionality
+        addTimestamp.addEventListener('click', () => {
+            const currentMinutes = Math.floor(currentTime);
+            const currentSeconds = Math.floor((currentTime % 1) * 60);
+            const timestamp = `[${currentMinutes}:${currentSeconds.toString().padStart(2, '0')}] `;
+            
+            const cursorPos = notesEditor.selectionStart;
+            const textBefore = notesEditor.value.substring(0, cursorPos);
+            const textAfter = notesEditor.value.substring(cursorPos);
+            
+            notesEditor.value = textBefore + timestamp + textAfter;
+            notesEditor.focus();
+            notesEditor.setSelectionRange(cursorPos + timestamp.length, cursorPos + timestamp.length);
+            
+            // Trigger save
+            notesEditor.dispatchEvent(new Event('input'));
+            showNotification('⏰ Timestamp added to your notes!', 'success');
+        });
+        
+        // Clear notes functionality
+        clearNotes.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear all notes? This action cannot be undone.')) {
+                notesEditor.value = '';
+                localStorage.removeItem('lesson-8-notes');
+                updateWordCount();
+                showNotification('🗑️ Notes cleared successfully!', 'info');
+            }
+        });
+        
+        // Export notes functionality
+        exportNotes.addEventListener('click', () => {
+            const notes = notesEditor.value;
+            if (!notes.trim()) {
+                showNotification('📝 No notes to export! Start taking notes first.', 'info');
+                return;
+            }
+            
+            const blob = new Blob([`Lesson 8: Loops and Iteration - Notes\n\n${notes}`], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'lesson-8-loops-iteration-notes.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('📤 Notes exported successfully!', 'success');
+        });
+        
+        // Lesson navigation functionality
+        document.querySelectorAll('.lesson-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const lessonNumber = item.dataset.lesson;
+                const lessonTitle = item.querySelector('h4').textContent;
+                
+                // Check if lesson is locked
+                if (item.querySelector('.lesson-locked')) {
+                    showNotification('🔒 Complete previous lessons to unlock this one!', 'info');
+                    return;
+                }
+                
+                // Update active lesson
+                document.querySelectorAll('.lesson-item').forEach(l => l.classList.remove('active'));
+                item.classList.add('active');
+                
+                showNotification(`📚 Loading ${lessonTitle}...`, 'info');
+                
+                // Close mobile sidebar after selection
+                if (window.innerWidth < 1024) {
+                    toggleLessonSidebar();
+                }
+            });
+        });
+        
+        // Mark as complete functionality
+        const markCompleteBtn = document.getElementById('mark-complete');
+        markCompleteBtn.addEventListener('click', () => {
+            markCompleteBtn.innerHTML = `
+                <span>✓ Completed!</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path>
+                </svg>
+            `;
+            markCompleteBtn.classList.add('completion-celebration');
+            markCompleteBtn.style.background = 'linear-gradient(135deg, #10B981, #059669)';
+            
+            // Update lesson status in sidebar
+            const currentLesson = document.querySelector('.lesson-item.active');
+            const progressIndicator = currentLesson.querySelector('.lesson-progress');
+            progressIndicator.className = 'lesson-progress lesson-completed';
+            progressIndicator.textContent = '✓';
+            
+            // Update course progress
+            const progressBar = document.querySelector('.course-progress');
+            progressBar.style.width = '75%'; // 9 of 12 lessons
+            
+            showNotification('🎉 Lesson completed! You\'re making great progress! +50 XP earned!', 'success');
+            
+            // Unlock next lesson after a delay
+            setTimeout(() => {
+                const nextLesson = document.querySelector('[data-lesson="9"]');
+                if (nextLesson) {
+                    const nextProgressIndicator = nextLesson.querySelector('.lesson-progress');
+                    nextProgressIndicator.className = 'lesson-progress';
+                    nextProgressIndicator.textContent = '9';
+                    nextLesson.querySelector('h4').classList.remove('text-gray-500');
+                    nextLesson.querySelector('h4').classList.add('text-navy', 'dark:text-white');
+                    
+                    showNotification('🔓 Next lesson unlocked! Switch Statements is now available!', 'info');
+                }
+            }, 2000);
+        });
+        
+        // Quiz functionality
+        const quizBtn = document.getElementById('quiz-btn');
+        quizBtn.addEventListener('click', () => {
+            quizBtn.innerHTML = '🎯 Starting Quiz...';
+            quizBtn.style.background = 'linear-gradient(135deg, #059669, #047857)';
+            
+            setTimeout(() => {
+                showNotification('🧠 Quiz started! Test your knowledge of control structures!', 'info');
+                quizBtn.innerHTML = '📊 Quiz in Progress...';
+                
+                // Simulate quiz completion
+                setTimeout(() => {
+                    quizBtn.innerHTML = '✅ Quiz Completed! (Score: 9/10)';
+                    quizBtn.style.background = 'linear-gradient(135deg, #10B981, #059669)';
+                    showNotification('🏆 Excellent work! You scored 9/10 on the quiz! +75 XP earned!', 'success');
+                }, 5000);
+            }, 1000);
+        });
+        
+        // Enhanced notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification fixed top-20 right-4 z-50 px-6 py-4 rounded-xl shadow-lg max-w-sm ${
+                type === 'success' ? 'bg-green-500 text-white' : 
+                type === 'error' ? 'bg-red-500 text-white' : 
+                'bg-blue-500 text-white'
+            }`;
+            
+            notification.innerHTML = `
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0">
+                        ${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium">${message}</p>
+                    </div>
+                    <button class="flex-shrink-0 text-white/80 hover:text-white" onclick="this.parentElement.parentElement.remove()">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        if (notification.parentElement) {
+                            document.body.removeChild(notification);
+                        }
+                    }, 300);
+                }
+            }, 4000);
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Toggle theme with Ctrl/Cmd + D
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                themeToggle.click();
+            }
+            
+            // Play/pause video with Space (when not in notes)
+            if (e.key === ' ' && e.target !== notesEditor) {
+                e.preventDefault();
+                videoPlayer.click();
+            }
+            
+            // Add timestamp with Ctrl/Cmd + T
+            if ((e.ctrlKey || e.metaKey) && e.key === 't' && e.target === notesEditor) {
+                e.preventDefault();
+                addTimestamp.click();
+            }
+            
+            // Close sidebar with Escape
+            if (e.key === 'Escape') {
+                if (!lessonSidebar.classList.contains('-translate-x-full')) {
+                    toggleLessonSidebar();
+                }
+            }
+        });
+        
+        // Initialize page
+        window.addEventListener('load', () => {
+            // Show welcome message
+            setTimeout(() => {
+                const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+                const themeIcon = currentTheme === 'dark' ? '🌙' : '☀️';
+                showNotification(`${themeIcon} Welcome to Lesson 8! Ready to master loops and iteration?`, 'success');
+            }, 1000);
+            
+            // Animate progress bar
+            setTimeout(() => {
+                const progressBar = document.querySelector('.course-progress');
+                progressBar.style.width = '67%';
+            }, 1500);
+        });
+        
+        // Auto-save notes periodically
+        setInterval(() => {
+            if (notesEditor.value !== savedNotes) {
+                localStorage.setItem('lesson-8-notes', notesEditor.value);
+            }
+        }, 30000); // Save every 30 seconds
+        
+        // Track learning time
+        let learningTime = 0;
+        setInterval(() => {
+            learningTime++;
+            if (learningTime % 300 === 0) { // Every 5 minutes
+                showNotification(`⏰ You've been learning for ${learningTime / 60} minutes! Great focus!`, 'info');
+            }
+        }, 1000);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96f62a3034fb946f',t:'MTc1NTIzNDQwOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
