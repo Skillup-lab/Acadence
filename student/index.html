@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Tutor - Acadence</title>
+      <meta name="description" content="Acadence is a global EdTech platform connecting learners, educators, and skilled individuals. Gain job-ready skills, teach with powerful tools, and share knowledge without borders.">
+
+    <link rel="icon" type="image/webp" href="images/logo.webp">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0A1D37',
+                        purple: '#6C2DC7',
+                        'purple-light': '#8B5CF6',
+                        'navy-light': '#1E3A8A'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Enhanced Dark/Light mode transitions */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        /* Dark mode specific enhancements */
+        .dark {
+            color-scheme: dark;
+        }
+        
+        /* Search Bar Styling */
+        .search-container {
+            background: linear-gradient(135deg, #6C2DC7, #8B5CF6);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .search-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-60px) translateY(-60px); }
+        }
+        
+        /* Tutor Card Styling */
+        .tutor-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+        }
+        
+        .tutor-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -12px rgba(108, 45, 199, 0.25);
+            border-color: #6C2DC7;
+        }
+        
+        .dark .tutor-card:hover {
+            box-shadow: 0 20px 40px -12px rgba(139, 92, 246, 0.3);
+        }
+        
+        /* Profile Picture Styling */
+        .profile-picture {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-picture::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(108, 45, 199, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tutor-card:hover .profile-picture::after {
+            opacity: 1;
+        }
+        
+        /* Rating Stars */
+        .star-rating {
+            display: flex;
+            align-items: center;
+        }
+        
+        .star {
+            color: #FCD34D;
+            font-size: 16px;
+        }
+        
+        .star.empty {
+            color: #E5E7EB;
+        }
+        
+        .dark .star.empty {
+            color: #4B5563;
+        }
+        
+        /* Price Range Slider */
+        .price-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: linear-gradient(90deg, #6C2DC7 0%, #8B5CF6 100%);
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        .price-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #6C2DC7;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(108, 45, 199, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .price-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 4px 12px rgba(108, 45, 199, 0.4);
+        }
+        
+        .price-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #6C2DC7;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(108, 45, 199, 0.3);
+        }
+        
+        /* Filter Sidebar */
+        .filter-sidebar {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Book Now Button Animation */
+        .book-btn {
+            background: linear-gradient(135deg, #6C2DC7, #8B5CF6);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .book-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .book-btn:hover::before {
+            left: 100%;
+        }
+        
+        .book-btn:hover {
+            background: linear-gradient(135deg, #8B5CF6, #A855F7);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -8px rgba(108, 45, 199, 0.5);
+        }
+        
+        /* Subject Badge */
+        .subject-badge {
+            background: rgba(108, 45, 199, 0.1);
+            color: #6C2DC7;
+            border: 1px solid rgba(108, 45, 199, 0.2);
+        }
+        
+        .dark .subject-badge {
+            background: rgba(139, 92, 246, 0.2);
+            color: #A855F7;
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+        
+        /* Online/Offline Badge */
+        .mode-badge.online {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .mode-badge.offline {
+            background: rgba(245, 158, 11, 0.1);
+            color: #F59E0B;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        
+        /* Search Input Focus */
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(108, 45, 199, 0.1);
+            border-color: #6C2DC7;
+        }
+        
+        /* Filter Checkbox */
+        .filter-checkbox {
+            accent-color: #6C2DC7;
+        }
+        
+        /* Mobile Overlay */
+        .mobile-overlay {
+            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .dark .mobile-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        /* Theme Toggle Animation */
+        .theme-toggle {
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(180deg) scale(1.1);
+        }
+        
+        /* Notification Styles */
+        .notification {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Loading Animation */
+        .loading-spinner {
+            border: 3px solid rgba(108, 45, 199, 0.1);
+            border-top: 3px solid #6C2DC7;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Grid */
+        .tutor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .tutor-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Verified Badge */
+        .verified-badge {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        
+        /* Availability Indicator */
+        .availability-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            border: 2px solid white;
+        }
+        
+        .availability-dot.available {
+            background: #10B981;
+        }
+        
+        .availability-dot.busy {
+            background: #F59E0B;
+        }
+        
+        .availability-dot.offline {
+            background: #EF4444;
+        }
+        
+        /* Filter Animation */
+        .filter-item {
+            transition: all 0.2s ease;
+        }
+        
+        .filter-item:hover {
+            background-color: rgba(108, 45, 199, 0.05);
+            border-radius: 8px;
+        }
+        
+        .dark .filter-item:hover {
+            background-color: rgba(139, 92, 246, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors">
+    <!-- Mobile Filter Overlay -->
+    <div id="mobile-overlay" class="fixed inset-0 mobile-overlay z-40 lg:hidden hidden"></div>
+    
+    <!-- Header -->
+    <header class="bg-navy dark:bg-gray-800 text-white shadow-lg sticky top-0 z-30">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Navigation -->
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-purple rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">A</span>
+                        </div>
+                        <h1 class="text-xl font-bold">Acadence</h1>
+                    </div>
+                    
+                    <nav class="hidden md:flex items-center space-x-6">
+                        <a href="#" class="hover:text-purple-light transition-colors">Courses</a>
+                        <a href="#" class="text-purple-light font-semibold">Find Tutors</a>
+                        <a href="#" class="hover:text-purple-light transition-colors">About</a>
+                    </nav>
+                </div>
+                
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-3">
+                    <!-- Mobile Filter Toggle -->
+                    <button id="mobile-filter-btn" class="lg:hidden p-2 rounded-lg hover:bg-navy-light dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="theme-toggle p-2 rounded-lg hover:bg-navy-light dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- User Menu -->
+                    <div class="flex items-center space-x-3">
+                        <button class="p-2 rounded-lg hover:bg-navy-light dark:hover:bg-gray-700 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h10a2 2 0 002-2V7a2 2 0 00-2-2H4a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </button>
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%236C2DC7'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EU%3C/text%3E%3C/svg%3E" alt="User" class="w-8 h-8 rounded-full">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Search Section -->
+    <section class="search-container py-16 relative">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-white mb-4">Find Your Perfect Tutor</h2>
+                <p class="text-xl text-purple-100">Connect with expert tutors and accelerate your learning journey</p>
+            </div>
+            
+            <!-- Search Form -->
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <!-- Subject Search -->
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                            <div class="relative">
+                                <input type="text" id="subject-search" placeholder="e.g., Mathematics, Physics, English..." 
+                                       class="search-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                <svg class="absolute right-3 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Location -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Location</label>
+                            <input type="text" id="location-search" placeholder="City or Online" 
+                                   class="search-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        </div>
+                        
+                        <!-- Mode -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mode</label>
+                            <select id="mode-select" class="search-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                <option value="">All Modes</option>
+                                <option value="online">Online</option>
+                                <option value="offline">In-Person</option>
+                                <option value="both">Both</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Button -->
+                    <div class="mt-6 text-center">
+                        <button id="search-btn" class="book-btn px-8 py-3 text-white font-semibold rounded-lg inline-flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <span>Search Tutors</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Filters Sidebar -->
+            <aside id="filter-sidebar" class="filter-sidebar fixed lg:static top-0 left-0 h-full w-80 bg-white dark:bg-gray-800 shadow-lg border-r border-gray-200 dark:border-gray-700 z-20 transform -translate-x-full lg:translate-x-0 overflow-y-auto lg:w-64 lg:flex-shrink-0">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-bold text-navy dark:text-white">Filters</h3>
+                        <button id="close-filters" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Price Range -->
+                    <div class="mb-8">
+                        <h4 class="font-semibold text-navy dark:text-white mb-4">Price Range (per hour)</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4">
+                                <input type="range" id="min-price" class="price-slider flex-1" min="10" max="200" value="10">
+                                <span class="text-sm font-medium text-gray-600 dark:text-gray-400 w-12">$<span id="min-price-value">10</span></span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <input type="range" id="max-price" class="price-slider flex-1" min="10" max="200" value="100">
+                                <span class="text-sm font-medium text-gray-600 dark:text-gray-400 w-12">$<span id="max-price-value">100</span></span>
+                            </div>
+                            <div class="text-center text-sm text-gray-500 dark:text-gray-400">
+                                $<span id="price-range">10 - 100</span> per hour
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rating Filter -->
+                    <div class="mb-8">
+                        <h4 class="font-semibold text-navy dark:text-white mb-4">Minimum Rating</h4>
+                        <div class="space-y-3">
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="radio" name="rating" value="5" class="filter-checkbox">
+                                <div class="star-rating">
+                                    <span class="star">★★★★★</span>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 ml-2">5.0</span>
+                                </div>
+                            </label>
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="radio" name="rating" value="4" class="filter-checkbox">
+                                <div class="star-rating">
+                                    <span class="star">★★★★</span><span class="star empty">★</span>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 ml-2">4.0+</span>
+                                </div>
+                            </label>
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="radio" name="rating" value="3" class="filter-checkbox">
+                                <div class="star-rating">
+                                    <span class="star">★★★</span><span class="star empty">★★</span>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 ml-2">3.0+</span>
+                                </div>
+                            </label>
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="radio" name="rating" value="0" class="filter-checkbox" checked>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Any Rating</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Subject Categories -->
+                    <div class="mb-8">
+                        <h4 class="font-semibold text-navy dark:text-white mb-4">Subject Categories</h4>
+                        <div class="space-y-3">
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="checkbox" class="filter-checkbox" value="mathematics">
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Mathematics</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 ml-auto">(24)</span>
+                            </label>
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="checkbox" class="filter-checkbox" value="science">
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Science</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 ml-auto">(18)</span>
+                            </label>
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="checkbox" class="filter-checkbox" value="languages">
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Languages</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 ml-auto">(15)</span>
+                            </label>
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="checkbox" class="filter-checkbox" value="programming">
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Programming</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 ml-auto">(12)</span>
+                            </label>
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="checkbox" class="filter-checkbox" value="business">
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Business</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 ml-auto">(8)</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Availability -->
+                    <div class="mb-8">
+                        <h4 class="font-semibold text-navy dark:text-white mb-4">Availability</h4>
+                        <div class="space-y-3">
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="checkbox" class="filter-checkbox" value="available-now">
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Available Now</span>
+                            </label>
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="checkbox" class="filter-checkbox" value="weekends">
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Weekends</span>
+                            </label>
+                            <label class="filter-item flex items-center space-x-3 p-2 cursor-pointer">
+                                <input type="checkbox" class="filter-checkbox" value="evenings">
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Evenings</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Clear Filters -->
+                    <button id="clear-filters" class="w-full py-2 px-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        Clear All Filters
+                    </button>
+                </div>
+            </aside>
+            
+            <!-- Tutors Grid -->
+            <main class="flex-1">
+                <!-- Results Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-navy dark:text-white">Available Tutors</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Found <span id="results-count">24</span> tutors matching your criteria</p>
+                    </div>
+                    
+                    <!-- Sort Options -->
+                    <div class="flex items-center space-x-4">
+                        <label class="text-sm text-gray-600 dark:text-gray-400">Sort by:</label>
+                        <select id="sort-select" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-purple">
+                            <option value="rating">Highest Rated</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="experience">Most Experienced</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Loading State -->
+                <div id="loading" class="hidden text-center py-12">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <p class="text-gray-600 dark:text-gray-400">Finding the best tutors for you...</p>
+                </div>
+                
+                <!-- Tutors Grid -->
+                <div id="tutors-grid" class="tutor-grid">
+                    <!-- Tutor Card 1 -->
+                    <div class="tutor-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                        <div class="flex items-start space-x-4 mb-4">
+                            <div class="profile-picture relative">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23F59E0B'/%3E%3Ctext x='32' y='40' text-anchor='middle' fill='white' font-family='Arial' font-size='24' font-weight='bold'%3ESM%3C/text%3E%3C/svg%3E" alt="Sarah Mitchell" class="w-16 h-16 rounded-full">
+                                <div class="availability-dot available"></div>
+                                <div class="verified-badge">✓ Verified</div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-navy dark:text-white">Dr. Sarah Mitchell</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">PhD in Mathematics • 8 years experience</p>
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <div class="star-rating">
+                                        <span class="star">★★★★★</span>
+                                        <span class="text-sm text-gray-600 dark:text-gray-400 ml-1">4.9 (127 reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="subject-badge text-xs px-2 py-1 rounded-full">Mathematics</span>
+                                    <span class="mode-badge online text-xs px-2 py-1 rounded-full">Online</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Specializing in Calculus, Linear Algebra, and Statistics. I help students build strong mathematical foundations with personalized teaching methods.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="text-2xl font-bold text-purple">$45<span class="text-sm font-normal text-gray-500">/hour</span></div>
+                                <div class="text-sm text-green-600 dark:text-green-400">● Available now</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <button class="flex-1 py-2 px-4 border border-purple text-purple rounded-lg hover:bg-purple hover:text-white transition-colors">
+                                View Profile
+                            </button>
+                            <button class="book-btn flex-1 py-2 px-4 text-white rounded-lg font-semibold">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tutor Card 2 -->
+                    <div class="tutor-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                        <div class="flex items-start space-x-4 mb-4">
+                            <div class="profile-picture relative">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%2310B981'/%3E%3Ctext x='32' y='40' text-anchor='middle' fill='white' font-family='Arial' font-size='24' font-weight='bold'%3EJC%3C/text%3E%3C/svg%3E" alt="James Chen" class="w-16 h-16 rounded-full">
+                                <div class="availability-dot busy"></div>
+                                <div class="verified-badge">✓ Verified</div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-navy dark:text-white">James Chen</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">MS Computer Science • 5 years experience</p>
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <div class="star-rating">
+                                        <span class="star">★★★★★</span>
+                                        <span class="text-sm text-gray-600 dark:text-gray-400 ml-1">4.8 (89 reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="subject-badge text-xs px-2 py-1 rounded-full">Programming</span>
+                                    <span class="mode-badge online text-xs px-2 py-1 rounded-full">Online</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Expert in Python, JavaScript, and Web Development. I make coding fun and accessible for beginners and advanced students alike.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="text-2xl font-bold text-purple">$55<span class="text-sm font-normal text-gray-500">/hour</span></div>
+                                <div class="text-sm text-yellow-600 dark:text-yellow-400">● Next available: 2 hours</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <button class="flex-1 py-2 px-4 border border-purple text-purple rounded-lg hover:bg-purple hover:text-white transition-colors">
+                                View Profile
+                            </button>
+                            <button class="book-btn flex-1 py-2 px-4 text-white rounded-lg font-semibold">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tutor Card 3 -->
+                    <div class="tutor-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                        <div class="flex items-start space-x-4 mb-4">
+                            <div class="profile-picture relative">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23EF4444'/%3E%3Ctext x='32' y='40' text-anchor='middle' fill='white' font-family='Arial' font-size='24' font-weight='bold'%3EER%3C/text%3E%3C/svg%3E" alt="Emily Rodriguez" class="w-16 h-16 rounded-full">
+                                <div class="availability-dot available"></div>
+                                <div class="verified-badge">✓ Verified</div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-navy dark:text-white">Emily Rodriguez</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">MA English Literature • 6 years experience</p>
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <div class="star-rating">
+                                        <span class="star">★★★★</span><span class="star empty">★</span>
+                                        <span class="text-sm text-gray-600 dark:text-gray-400 ml-1">4.7 (156 reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="subject-badge text-xs px-2 py-1 rounded-full">English</span>
+                                    <span class="mode-badge offline text-xs px-2 py-1 rounded-full">In-Person</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Passionate about literature and writing. I help students improve their reading comprehension, essay writing, and critical thinking skills.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="text-2xl font-bold text-purple">$40<span class="text-sm font-normal text-gray-500">/hour</span></div>
+                                <div class="text-sm text-green-600 dark:text-green-400">● Available now</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <button class="flex-1 py-2 px-4 border border-purple text-purple rounded-lg hover:bg-purple hover:text-white transition-colors">
+                                View Profile
+                            </button>
+                            <button class="book-btn flex-1 py-2 px-4 text-white rounded-lg font-semibold">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tutor Card 4 -->
+                    <div class="tutor-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                        <div class="flex items-start space-x-4 mb-4">
+                            <div class="profile-picture relative">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%236366F1'/%3E%3Ctext x='32' y='40' text-anchor='middle' fill='white' font-family='Arial' font-size='24' font-weight='bold'%3EMP%3C/text%3E%3C/svg%3E" alt="Michael Park" class="w-16 h-16 rounded-full">
+                                <div class="availability-dot available"></div>
+                                <div class="verified-badge">✓ Verified</div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-navy dark:text-white">Dr. Michael Park</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">PhD Physics • 10 years experience</p>
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <div class="star-rating">
+                                        <span class="star">★★★★★</span>
+                                        <span class="text-sm text-gray-600 dark:text-gray-400 ml-1">5.0 (203 reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="subject-badge text-xs px-2 py-1 rounded-full">Physics</span>
+                                    <span class="mode-badge online text-xs px-2 py-1 rounded-full">Online</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Quantum mechanics, thermodynamics, and electromagnetism expert. I simplify complex physics concepts for better understanding.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="text-2xl font-bold text-purple">$65<span class="text-sm font-normal text-gray-500">/hour</span></div>
+                                <div class="text-sm text-green-600 dark:text-green-400">● Available now</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <button class="flex-1 py-2 px-4 border border-purple text-purple rounded-lg hover:bg-purple hover:text-white transition-colors">
+                                View Profile
+                            </button>
+                            <button class="book-btn flex-1 py-2 px-4 text-white rounded-lg font-semibold">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tutor Card 5 -->
+                    <div class="tutor-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                        <div class="flex items-start space-x-4 mb-4">
+                            <div class="profile-picture relative">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23EC4899'/%3E%3Ctext x='32' y='40' text-anchor='middle' fill='white' font-family='Arial' font-size='24' font-weight='bold'%3EAL%3C/text%3E%3C/svg%3E" alt="Anna Lopez" class="w-16 h-16 rounded-full">
+                                <div class="availability-dot busy"></div>
+                                <div class="verified-badge">✓ Verified</div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-navy dark:text-white">Anna Lopez</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Native Spanish Speaker • 4 years experience</p>
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <div class="star-rating">
+                                        <span class="star">★★★★★</span>
+                                        <span class="text-sm text-gray-600 dark:text-gray-400 ml-1">4.9 (78 reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="subject-badge text-xs px-2 py-1 rounded-full">Spanish</span>
+                                    <span class="mode-badge online text-xs px-2 py-1 rounded-full">Online</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Interactive Spanish lessons focusing on conversation, grammar, and cultural immersion. Perfect for all levels from beginner to advanced.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="text-2xl font-bold text-purple">$35<span class="text-sm font-normal text-gray-500">/hour</span></div>
+                                <div class="text-sm text-yellow-600 dark:text-yellow-400">● Next available: 1 hour</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <button class="flex-1 py-2 px-4 border border-purple text-purple rounded-lg hover:bg-purple hover:text-white transition-colors">
+                                View Profile
+                            </button>
+                            <button class="book-btn flex-1 py-2 px-4 text-white rounded-lg font-semibold">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tutor Card 6 -->
+                    <div class="tutor-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                        <div class="flex items-start space-x-4 mb-4">
+                            <div class="profile-picture relative">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%2306B6D4'/%3E%3Ctext x='32' y='40' text-anchor='middle' fill='white' font-family='Arial' font-size='24' font-weight='bold'%3ERJ%3C/text%3E%3C/svg%3E" alt="Robert Johnson" class="w-16 h-16 rounded-full">
+                                <div class="availability-dot available"></div>
+                                <div class="verified-badge">✓ Verified</div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-navy dark:text-white">Robert Johnson</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">MBA Finance • 7 years experience</p>
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <div class="star-rating">
+                                        <span class="star">★★★★</span><span class="star empty">★</span>
+                                        <span class="text-sm text-gray-600 dark:text-gray-400 ml-1">4.6 (94 reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="subject-badge text-xs px-2 py-1 rounded-full">Business</span>
+                                    <span class="mode-badge offline text-xs px-2 py-1 rounded-full">In-Person</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Corporate finance, accounting, and business strategy expert. I help students understand real-world business applications.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="text-2xl font-bold text-purple">$50<span class="text-sm font-normal text-gray-500">/hour</span></div>
+                                <div class="text-sm text-green-600 dark:text-green-400">● Available now</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <button class="flex-1 py-2 px-4 border border-purple text-purple rounded-lg hover:bg-purple hover:text-white transition-colors">
+                                View Profile
+                            </button>
+                            <button class="book-btn flex-1 py-2 px-4 text-white rounded-lg font-semibold">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="text-center mt-8">
+                    <button id="load-more" class="px-6 py-3 border border-purple text-purple rounded-lg hover:bg-purple hover:text-white transition-colors">
+                        Load More Tutors
+                    </button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Theme Toggle Functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.classList.toggle('dark', currentTheme === 'dark');
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            
+            // Show theme change notification
+            const themeMessage = newTheme === 'dark' ? '🌙 Dark mode activated! Perfect for late-night tutor searching!' : '☀️ Light mode activated! Ready for bright learning!';
+            showNotification(themeMessage, 'success');
+        });
+        
+        // Mobile filter sidebar functionality
+        const mobileFilterBtn = document.getElementById('mobile-filter-btn');
+        const filterSidebar = document.getElementById('filter-sidebar');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const closeFilters = document.getElementById('close-filters');
+        
+        function toggleFilterSidebar() {
+            filterSidebar.classList.toggle('-translate-x-full');
+            mobileOverlay.classList.toggle('hidden');
+        }
+        
+        mobileFilterBtn.addEventListener('click', toggleFilterSidebar);
+        mobileOverlay.addEventListener('click', toggleFilterSidebar);
+        closeFilters.addEventListener('click', toggleFilterSidebar);
+        
+        // Close sidebar on window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                filterSidebar.classList.remove('-translate-x-full');
+                mobileOverlay.classList.add('hidden');
+            }
+        });
+        
+        // Price Range Sliders
+        const minPriceSlider = document.getElementById('min-price');
+        const maxPriceSlider = document.getElementById('max-price');
+        const minPriceValue = document.getElementById('min-price-value');
+        const maxPriceValue = document.getElementById('max-price-value');
+        const priceRange = document.getElementById('price-range');
+        
+        function updatePriceRange() {
+            const minPrice = parseInt(minPriceSlider.value);
+            const maxPrice = parseInt(maxPriceSlider.value);
+            
+            // Ensure min is not greater than max
+            if (minPrice > maxPrice) {
+                minPriceSlider.value = maxPrice;
+                minPriceValue.textContent = maxPrice;
+            } else {
+                minPriceValue.textContent = minPrice;
+            }
+            
+            maxPriceValue.textContent = maxPrice;
+            priceRange.textContent = `${minPriceSlider.value} - ${maxPrice}`;
+            
+            // Apply filter
+            filterTutors();
+        }
+        
+        minPriceSlider.addEventListener('input', updatePriceRange);
+        maxPriceSlider.addEventListener('input', updatePriceRange);
+        
+        // Search Functionality
+        const searchBtn = document.getElementById('search-btn');
+        const subjectSearch = document.getElementById('subject-search');
+        const locationSearch = document.getElementById('location-search');
+        const modeSelect = document.getElementById('mode-select');
+        const sortSelect = document.getElementById('sort-select');
+        const loading = document.getElementById('loading');
+        const tutorsGrid = document.getElementById('tutors-grid');
+        const resultsCount = document.getElementById('results-count');
+        
+        // Search button functionality
+        searchBtn.addEventListener('click', () => {
+            performSearch();
+        });
+        
+        // Enter key search
+        [subjectSearch, locationSearch].forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        });
+        
+        function performSearch() {
+            const subject = subjectSearch.value.toLowerCase();
+            const location = locationSearch.value.toLowerCase();
+            const mode = modeSelect.value;
+            
+            // Show loading
+            loading.classList.remove('hidden');
+            tutorsGrid.style.opacity = '0.5';
+            
+            // Simulate search delay
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                tutorsGrid.style.opacity = '1';
+                
+                // Update results count based on search
+                let count = 24;
+                if (subject) count = Math.max(1, Math.floor(Math.random() * 15) + 5);
+                if (location && location !== 'online') count = Math.max(1, Math.floor(count * 0.7));
+                if (mode) count = Math.max(1, Math.floor(count * 0.8));
+                
+                resultsCount.textContent = count;
+                showNotification(`🔍 Found ${count} tutors matching your search criteria!`, 'success');
+            }, 1500);
+        }
+        
+        // Filter functionality
+        function filterTutors() {
+            const cards = document.querySelectorAll('.tutor-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                let shouldShow = true;
+                
+                // Price filter
+                const priceText = card.querySelector('.text-2xl').textContent;
+                const price = parseInt(priceText.replace('$', ''));
+                const minPrice = parseInt(minPriceSlider.value);
+                const maxPrice = parseInt(maxPriceSlider.value);
+                
+                if (price < minPrice || price > maxPrice) {
+                    shouldShow = false;
+                }
+                
+                // Rating filter
+                const ratingFilter = document.querySelector('input[name="rating"]:checked');
+                if (ratingFilter && ratingFilter.value !== '0') {
+                    const ratingText = card.querySelector('.star-rating span:last-child').textContent;
+                    const rating = parseFloat(ratingText);
+                    if (rating < parseFloat(ratingFilter.value)) {
+                        shouldShow = false;
+                    }
+                }
+                
+                // Subject filter
+                const subjectFilters = document.querySelectorAll('input[type="checkbox"]:checked');
+                if (subjectFilters.length > 0) {
+                    const cardSubject = card.querySelector('.subject-badge').textContent.toLowerCase();
+                    let hasMatchingSubject = false;
+                    
+                    subjectFilters.forEach(filter => {
+                        if (cardSubject.includes(filter.value) || filter.value === 'programming' && cardSubject === 'programming') {
+                            hasMatchingSubject = true;
+                        }
+                    });
+                    
+                    if (!hasMatchingSubject) {
+                        shouldShow = false;
+                    }
+                }
+                
+                // Show/hide card
+                if (shouldShow) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            resultsCount.textContent = visibleCount;
+        }
+        
+        // Add event listeners to all filter inputs
+        document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(input => {
+            input.addEventListener('change', filterTutors);
+        });
+        
+        // Clear filters functionality
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        clearFiltersBtn.addEventListener('click', () => {
+            // Reset all filters
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.querySelector('input[name="rating"][value="0"]').checked = true;
+            minPriceSlider.value = 10;
+            maxPriceSlider.value = 200;
+            updatePriceRange();
+            
+            // Show all cards
+            document.querySelectorAll('.tutor-card').forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            resultsCount.textContent = '24';
+            showNotification('🔄 All filters cleared! Showing all tutors.', 'info');
+        });
+        
+        // Sort functionality
+        sortSelect.addEventListener('change', () => {
+            const sortBy = sortSelect.value;
+            const cards = Array.from(document.querySelectorAll('.tutor-card'));
+            
+            cards.sort((a, b) => {
+                switch (sortBy) {
+                    case 'rating':
+                        const ratingA = parseFloat(a.querySelector('.star-rating span:last-child').textContent);
+                        const ratingB = parseFloat(b.querySelector('.star-rating span:last-child').textContent);
+                        return ratingB - ratingA;
+                    
+                    case 'price-low':
+                        const priceA = parseInt(a.querySelector('.text-2xl').textContent.replace('$', ''));
+                        const priceB = parseInt(b.querySelector('.text-2xl').textContent.replace('$', ''));
+                        return priceA - priceB;
+                    
+                    case 'price-high':
+                        const priceA2 = parseInt(a.querySelector('.text-2xl').textContent.replace('$', ''));
+                        const priceB2 = parseInt(b.querySelector('.text-2xl').textContent.replace('$', ''));
+                        return priceB2 - priceA2;
+                    
+                    case 'experience':
+                        const expA = parseInt(a.querySelector('p').textContent.match(/(\d+) years/)?.[1] || 0);
+                        const expB = parseInt(b.querySelector('p').textContent.match(/(\d+) years/)?.[1] || 0);
+                        return expB - expA;
+                    
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Re-append sorted cards
+            const grid = document.getElementById('tutors-grid');
+            cards.forEach(card => grid.appendChild(card));
+            
+            showNotification(`📊 Tutors sorted by ${sortBy.replace('-', ' ')}!`, 'info');
+        });
+        
+        // Book Now functionality
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('book-btn') || e.target.closest('.book-btn')) {
+                const card = e.target.closest('.tutor-card');
+                const tutorName = card.querySelector('h3').textContent;
+                const price = card.querySelector('.text-2xl').textContent;
+                
+                // Animate button
+                const btn = e.target.closest('.book-btn');
+                btn.innerHTML = '⏳ Booking...';
+                btn.style.background = 'linear-gradient(135deg, #059669, #047857)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '✅ Booking Confirmed!';
+                    showNotification(`🎉 Successfully booked a session with ${tutorName} at ${price}! Check your email for details.`, 'success');
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = 'Book Now';
+                        btn.style.background = 'linear-gradient(135deg, #6C2DC7, #8B5CF6)';
+                    }, 3000);
+                }, 2000);
+            }
+        });
+        
+        // View Profile functionality
+        document.addEventListener('click', (e) => {
+            if (e.target.textContent === 'View Profile') {
+                const card = e.target.closest('.tutor-card');
+                const tutorName = card.querySelector('h3').textContent;
+                showNotification(`👤 Opening ${tutorName}'s detailed profile...`, 'info');
+            }
+        });
+        
+        // Load More functionality
+        const loadMoreBtn = document.getElementById('load-more');
+        loadMoreBtn.addEventListener('click', () => {
+            loadMoreBtn.innerHTML = '<div class="loading-spinner inline-block mr-2"></div>Loading more tutors...';
+            
+            setTimeout(() => {
+                const currentCount = parseInt(resultsCount.textContent);
+                const newCount = currentCount + 6;
+                resultsCount.textContent = newCount;
+                loadMoreBtn.innerHTML = 'Load More Tutors';
+                showNotification(`📚 Loaded 6 more tutors! Now showing ${newCount} tutors.`, 'success');
+            }, 1500);
+        });
+        
+        // Enhanced notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification fixed top-20 right-4 z-50 px-6 py-4 rounded-xl shadow-lg max-w-sm ${
+                type === 'success' ? 'bg-green-500 text-white' : 
+                type === 'error' ? 'bg-red-500 text-white' : 
+                'bg-blue-500 text-white'
+            }`;
+            
+            notification.innerHTML = `
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0">
+                        ${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium">${message}</p>
+                    </div>
+                    <button class="flex-shrink-0 text-white/80 hover:text-white" onclick="this.parentElement.parentElement.remove()">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        if (notification.parentElement) {
+                            document.body.removeChild(notification);
+                        }
+                    }, 300);
+                }
+            }, 4000);
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Toggle theme with Ctrl/Cmd + D
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                themeToggle.click();
+            }
+            
+            // Focus search with Ctrl/Cmd + K
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                subjectSearch.focus();
+            }
+            
+            // Close filter sidebar with Escape
+            if (e.key === 'Escape') {
+                if (!filterSidebar.classList.contains('-translate-x-full')) {
+                    toggleFilterSidebar();
+                }
+            }
+        });
+        
+        // Initialize page
+        window.addEventListener('load', () => {
+            // Show welcome message
+            setTimeout(() => {
+                const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+                const themeIcon = currentTheme === 'dark' ? '🌙' : '☀️';
+                showNotification(`${themeIcon} Welcome to Acadence! Find your perfect tutor today!`, 'success');
+            }, 1000);
+            
+            // Initialize price range
+            updatePriceRange();
+        });
+        
+        // Auto-save search preferences
+        [subjectSearch, locationSearch, modeSelect].forEach(input => {
+            input.addEventListener('change', () => {
+                localStorage.setItem('tutor-search-preferences', JSON.stringify({
+                    subject: subjectSearch.value,
+                    location: locationSearch.value,
+                    mode: modeSelect.value
+                }));
+            });
+        });
+        
+        // Load saved search preferences
+        const savedPreferences = localStorage.getItem('tutor-search-preferences');
+        if (savedPreferences) {
+            const prefs = JSON.parse(savedPreferences);
+            subjectSearch.value = prefs.subject || '';
+            locationSearch.value = prefs.location || '';
+            modeSelect.value = prefs.mode || '';
+        }
+        
+        // Simulate real-time availability updates
+        setInterval(() => {
+            const availabilityDots = document.querySelectorAll('.availability-dot');
+            availabilityDots.forEach(dot => {
+                if (Math.random() < 0.1) { // 10% chance to change status
+                    const statuses = ['available', 'busy', 'offline'];
+                    const currentStatus = dot.classList.contains('available') ? 'available' : 
+                                        dot.classList.contains('busy') ? 'busy' : 'offline';
+                    const newStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                    
+                    if (currentStatus !== newStatus) {
+                        dot.className = `availability-dot ${newStatus}`;
+                        
+                        // Update availability text
+                        const card = dot.closest('.tutor-card');
+                        const availabilityText = card.querySelector('.text-sm:last-child');
+                        if (newStatus === 'available') {
+                            availabilityText.textContent = '● Available now';
+                            availabilityText.className = 'text-sm text-green-600 dark:text-green-400';
+                        } else if (newStatus === 'busy') {
+                            availabilityText.textContent = '● Next available: 1-2 hours';
+                            availabilityText.className = 'text-sm text-yellow-600 dark:text-yellow-400';
+                        } else {
+                            availabilityText.textContent = '● Offline';
+                            availabilityText.className = 'text-sm text-red-600 dark:text-red-400';
+                        }
+                    }
+                }
+            });
+        }, 30000); // Check every 30 seconds
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96f63801900893f1',t:'MTc1NTIzNDk3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
