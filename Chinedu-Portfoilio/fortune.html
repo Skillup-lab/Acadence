@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Francis Fortune | Web Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --color-primary: #3b82f6;
+            --color-secondary: #2563eb;
+            --color-accent: #60a5fa;
+            --color-light: #f8fafc;
+            --color-white: #ffffff;
+            --color-gray: #64748b;
+            --color-dark: #1e293b;
+            --font-primary: 'Poppins', sans-serif;
+            --font-secondary: 'Inter', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-secondary);
+            line-height: 1.6;
+            color: var(--color-dark);
+            background-color: #ffffff;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-primary);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-primary);
+        }
+        
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--color-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            transform: translateY(-2px);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--color-dark);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            border-radius: 2px;
+        }
+        
+        .card {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1);
+            border-color: var(--color-primary);
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .nav-link {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--color-primary);
+            background-color: #f1f5f9;
+        }
+        
+        .nav-link.active {
+            color: var(--color-primary);
+            background-color: #f1f5f9;
+        }
+        
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #ffffff;
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.3);
+        }
+        
+        .skill-bar {
+            background-color: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            border-radius: 4px;
+            transition: width 2s ease-in-out;
+        }
+        
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.15);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover .project-image {
+            transform: scale(1.1);
+        }
+        
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(37, 99, 235, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--color-white);
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .service-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .contact-form {
+            background: var(--color-light);
+            padding: 2rem;
+            border-radius: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-dark);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: var(--color-white);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--color-primary);
+            color: var(--color-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--color-secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+        
+        /* Advanced Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .rotate-in {
+            opacity: 0;
+            transform: rotate(-10deg) scale(0.9);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .rotate-in.visible {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+        
+        .stagger-animation {
+            transition-delay: 0s;
+        }
+        
+        .stagger-animation:nth-child(1) { transition-delay: 0.1s; }
+        .stagger-animation:nth-child(2) { transition-delay: 0.2s; }
+        .stagger-animation:nth-child(3) { transition-delay: 0.3s; }
+        .stagger-animation:nth-child(4) { transition-delay: 0.4s; }
+        .stagger-animation:nth-child(5) { transition-delay: 0.5s; }
+        .stagger-animation:nth-child(6) { transition-delay: 0.6s; }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            to { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+        }
+        
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            padding: 2rem;
+        }
+        
+        .mobile-menu.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .mobile-nav-link {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-nav-link:hover {
+            color: var(--color-primary);
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 2001;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--color-dark);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        /* Enhanced Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 2rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 2.2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .hero-section {
+                min-height: 90vh;
+                padding-top: 120px;
+                padding-bottom: 2rem;
+            }
+            
+            .profile-image {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .profile-image {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .hero-section {
+                text-align: center;
+                min-height: 85vh;
+                padding-top: 100px;
+                padding-bottom: 1rem;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.5rem;
+                line-height: 1.1;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-section h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-section p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .card {
+                padding: 1.2rem;
+            }
+            
+            .service-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .stats-section {
+                padding: 2rem 0;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .timeline {
+                padding-left: 1.5rem;
+            }
+            
+            .timeline-item {
+                padding-left: 1.5rem;
+            }
+            
+            .contact-form {
+                padding: 1.5rem;
+            }
+            
+            .social-links {
+                gap: 0.8rem;
+            }
+            
+            .social-link {
+                width: 45px;
+                height: 45px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .profile-image {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+            
+            .flex.flex-wrap.gap-4 {
+                flex-direction: column;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            
+            .stat-label {
+                font-size: 0.9rem;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+            
+            .service-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+            
+            .project-card .p-6 {
+                padding: 1rem;
+            }
+            
+            .timeline::before {
+                left: 0.5rem;
+            }
+            
+            .timeline-item::before {
+                left: -1.7rem;
+                width: 10px;
+                height: 10px;
+            }
+            
+            .mobile-menu {
+                padding: 1rem;
+            }
+            
+            .mobile-nav-link {
+                font-size: 1.3rem;
+                margin: 0.8rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .profile-image {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .navbar {
+                padding: 0.8rem 0;
+            }
+            
+            .navbar .text-2xl {
+                font-size: 1.3rem;
+            }
+        }
+        
+        .stats-section {
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: 4rem 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--color-primary);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            border: 3px solid var(--color-white);
+        }
+        
+        .timeline-date {
+            color: var(--color-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+        
+        .timeline-description {
+            color: var(--color-gray);
+        }
+        
+        .cursor {
+            animation: blink 1s infinite;
+            color: var(--color-primary);
+            font-weight: 400;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-blue-600">
+                    &lt;Francis&gt; &lt;/Fortune&gt;
+                </div>
+                
+                <div class="desktop-nav hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#services" class="nav-link">Services</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" class="mobile-nav-link">Home</a>
+        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#skills" class="mobile-nav-link">Skills</a>
+        <a href="#projects" class="mobile-nav-link">Projects</a>
+        <a href="#services" class="mobile-nav-link">Services</a>
+        <a href="#contact" class="mobile-nav-link">Contact</a>
+    </div>
+    
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center hero-content">
+                <div class="slide-in-left">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                        Hi, I'm <span class="text-blue-600">Francis Fortune</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl text-gray-600 mb-6">
+                        <span id="typewriter"></span><span class="cursor">|</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8 max-w-lg">
+                        With 2+ years of experience, I blend multiple technologies as a Frontend Developer, 
+                        Graphics Designer, Gen AI Engineer, Digital Marketer, Videographer & Editor, 
+                        and Content Writer to create exceptional digital experiences.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#projects" class="btn btn-primary pulse-glow">View My Work</a>
+                        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+                    </div>
+                </div>
+                
+                <div class="text-center scale-in">
+                    <div class="w-80 h-80 mx-auto rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-6xl font-bold shadow-2xl floating">
+                        <img src="Fotdp.jpg" alt="" style="border-radius: 80px;">
+                    </div>
+                    <p class="mt-4 text-sm text-gray-500"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="stat-item scale-in stagger-animation">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Projects Completed</span>
+                </div>
+                <div class="stat-item scale-in stagger-animation">
+                    <span class="stat-number">2+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat-item scale-in stagger-animation">
+                    <span class="stat-number">30+</span>
+                    <span class="stat-label">Happy Clients</span>
+                </div>
+                <div class="stat-item scale-in stagger-animation">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="py-20">
+        <div class="container">
+            <h2 class="section-title fade-in">About Me</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="slide-in-left">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-600">My Story</h3>
+                    <p class="text-gray-600 mb-6">
+                        I'm a versatile digital creative with 2+ years of experience blending multiple 
+                        technologies to create exceptional digital experiences. My journey spans across 
+                        frontend development, graphics design, AI engineering, and content creation.
+                    </p>
+                    <p class="text-gray-600 mb-6">
+                        As a Frontend Developer, Graphics Designer, Gen AI Engineer, Digital Marketer, 
+                        Videographer & Editor, and Content Writer, I bring a unique multidisciplinary 
+                        approach to every project. I don't just build - I create comprehensive digital 
+                        solutions that tell stories and drive results.
+                    </p>
+                    <p class="text-gray-600">
+                        My philosophy is simple: blend the right technologies to get exactly what you want. 
+                        Whether it's crafting pixel-perfect interfaces, designing stunning visuals, 
+                        implementing AI solutions, or creating compelling content, I leverage my diverse 
+                        skill set to deliver exceptional outcomes.
+                    </p>
+                </div>
+                
+                <div class="slide-in-right">
+                    <div class="card">
+                        <h3 class="text-xl font-bold mb-6 text-blue-600">Experience Timeline</h3>
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-date">2024 - Present</div>
+        <div class="timeline-title">CEO & Founder – Acadence</div>
+        <div class="timeline-description">
+            Leading a fast-growing startup with a vision to expand across Nigeria in 3 years, 
+            building innovative tech solutions that inspire and empower young people.
+        </div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-date">2024 - Present</div>
+        <div class="timeline-title">Benfra Rentals and Event Concept</div>
+        <div class="timeline-description">
+            Social Media Manager – creating strategies, boosting digital presence, and connecting with customers online.
+        </div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-date">2023 - 2024</div>
+        <div class="timeline-title">Frontend Developer & Designer</div>
+        <div class="timeline-description">
+            Specialized in responsive web development, modern UI/UX design, 
+            and creating interactive digital experiences.
+        </div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-date">2021 - 2022</div>
+        <div class="timeline-title">Started Digital Journey</div>
+        <div class="timeline-description">
+            Began exploring the world of technology with just a Nokia torch, 
+            sparking a passion for coding, design, and creativity.
+        </div>
+    </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-blue-50">
+        <div class="container">
+            <h2 class="section-title fade-in">My Skills</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="fade-in">
+                    <div class="card">
+                        <h3 class="text-xl font-bold mb-6 text-blue-600">Technical Skills</h3>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">Frontend Development</span>
+                                    <span class="text-blue-600">95%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">Graphics Design</span>
+                                    <span class="text-blue-600">90%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">Gen AI Engineering</span>
+                                    <span class="text-blue-600">85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">Digital Marketing</span>
+                                    <span class="text-blue-600">88%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">Video Editing & Content Writing</span>
+                                    <span class="text-blue-600">92%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 92%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="card">
+    <h3 class="text-xl font-bold mb-6 text-blue-600">Tools & Technologies</h3>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <!-- HTML -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+             alt="HTML" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">HTML5</div>
+    </div>
+    <!-- CSS -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" 
+             alt="CSS" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">CSS3</div>
+    </div>
+    <!-- JavaScript -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" 
+             alt="JavaScript" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">JavaScript</div>
+    </div>
+    <!-- React -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" 
+             alt="React" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">React</div>
+    </div>
+<!-- Tailwind CSS -->
+<div class="text-center p-4 bg-blue-50 rounded-lg">
+    <img src="https://cdn.worldvectorlogo.com/logos/tailwind-css-2.svg" 
+         alt="Tailwind CSS" class="w-12 h-12 mx-auto mb-2">
+    <div class="font-medium">Tailwind CSS</div>
+</div>
+    <!-- SASS -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" 
+             alt="SASS" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">SASS</div>
+    </div>
+
+    <!-- GitHub -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" 
+             alt="GitHub" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">GitHub</div>
+    </div>
+
+    <!-- VS Code -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" 
+             alt="VS Code" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">VS Code</div>
+    </div>
+    <!-- Photoshop -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" 
+             alt="Photoshop" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">Photoshop</div>
+    </div>
+    <!-- Premiere Pro -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/Adobe_Premiere_Pro_CC_icon.svg" 
+             alt="Premiere Pro" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">Premiere Pro</div>
+    </div>
+    <!-- AI Tools -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" 
+             alt="AI Tools" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">AI Tools</div>
+    </div>
+    <!-- Figma -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" 
+             alt="Figma" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">Figma</div>
+    </div>
+    <!-- Digital Marketing -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn-icons-png.flaticon.com/512/4149/4149684.png" 
+             alt="Digital Marketing" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">Digital Marketing</div>
+    </div>
+    <!-- Content Writing -->
+    <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" 
+             alt="Content Writing" class="w-12 h-12 mx-auto mb-2">
+        <div class="font-medium">Content Writing</div>
+    </div>
+</div>
+
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+        <div class="container">
+            <h2 class="section-title fade-in">My Projects</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    <!-- YouTube Clone -->
+    <div class="project-card fade-in">
+        <img src="https://picsum.photos/400/200?random=11" alt="YouTube Clone" class="project-image">
+        <div class="project-overlay">
+            <div class="text-center text-white">
+                <h3 class="text-xl font-bold mb-2">YouTube Clone</h3>
+                <p class="mb-4">Responsive video streaming UI with search and player.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#" class="text-white hover:text-blue-200"><i class="fab fa-github text-xl"></i></a>
+                    <a href="#" class="text-white hover:text-blue-200"><i class="fas fa-external-link-alt text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">YouTube Clone</h3>
+            <p class="text-gray-600 mb-4">A simple clone of YouTube with video cards, search, and embedded player.</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">React</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">TailwindCSS</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">YouTube API</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Netflix Clone -->
+    <div class="project-card fade-in">
+        <img src="https://picsum.photos/400/200?random=12" alt="Netflix Clone" class="project-image">
+        <div class="project-overlay">
+            <div class="text-center text-white">
+                <h3 class="text-xl font-bold mb-2">Netflix Clone</h3>
+                <p class="mb-4">Movie browsing UI with hover effects & trailers.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#" class="text-white hover:text-blue-200"><i class="fab fa-github text-xl"></i></a>
+                    <a href="#" class="text-white hover:text-blue-200"><i class="fas fa-external-link-alt text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Netflix Clone</h3>
+            <p class="text-gray-600 mb-4">A Netflix-style UI for browsing movies with hover previews.</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">React</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">TMDB API</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">TailwindCSS</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Twitter Clone -->
+    <div class="project-card fade-in">
+        <img src="https://picsum.photos/400/200?random=13" alt="Twitter Clone" class="project-image">
+        <div class="project-overlay">
+            <div class="text-center text-white">
+                <h3 class="text-xl font-bold mb-2">Twitter Clone</h3>
+                <p class="mb-4">Microblogging app with tweet, like & retweet.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#" class="text-white hover:text-blue-200"><i class="fab fa-github text-xl"></i></a>
+                    <a href="#" class="text-white hover:text-blue-200"><i class="fas fa-external-link-alt text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Twitter Clone</h3>
+            <p class="text-gray-600 mb-4">A simple Twitter-style feed where users can post tweets & interact.</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">React</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">Firebase</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">TailwindCSS</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+            <div class="text-center mt-12 fade-in">
+                <a href="#" class="btn btn-primary">View All Projects</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-blue-50">
+        <div class="container">
+      <h2 class="section-title fade-in text-blue-600 font-bold text-3xl mb-8 text-center">My Services</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Service 1: Frontend Development -->
+    <div class="card text-center scale-in stagger-animation p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition">
+        <div class="service-icon mb-4">
+            <i class="fas fa-code text-blue-600 text-5xl"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Frontend Development</h3>
+        <p class="text-gray-600">
+            Clean, responsive, and interactive websites built with HTML, CSS, JavaScript, and React, 
+            ensuring smooth user experiences across all devices.
+        </p>
+    </div>
+
+    <!-- Service 2: UI/UX Design -->
+    <div class="card text-center scale-in stagger-animation p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition">
+        <div class="service-icon mb-4">
+            <i class="fas fa-pencil-ruler text-blue-600 text-5xl"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-4">UI/UX Design</h3>
+        <p class="text-gray-600">
+            Modern and intuitive interface designs focused on usability, aesthetics, 
+            and delivering seamless user experiences.
+        </p>
+    </div>
+
+    <!-- Service 3: Graphic Design -->
+    <div class="card text-center scale-in stagger-animation p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition">
+        <div class="service-icon mb-4">
+            <i class="fas fa-paint-brush text-blue-600 text-5xl"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Graphic Design</h3>
+        <p class="text-gray-600">
+            Professional graphics, branding materials, and creative designs using 
+            Photoshop and modern design tools.
+        </p>
+    </div>
+
+    <!-- Service 4: Videography & Editing -->
+    <div class="card text-center scale-in stagger-animation p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition">
+        <div class="service-icon mb-4">
+            <i class="fas fa-video text-blue-600 text-5xl"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Videography & Editing</h3>
+        <p class="text-gray-600">
+            High-quality video production and editing with Adobe Premiere Pro, 
+            delivering engaging visual content for brands and individuals.
+        </p>
+    </div>
+
+    <!-- Service 5: Digital Marketing -->
+    <div class="card text-center scale-in stagger-animation p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition">
+        <div class="service-icon mb-4">
+            <i class="fas fa-bullhorn text-blue-600 text-5xl"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Digital Marketing</h3>
+        <p class="text-gray-600">
+            Social media strategy, brand awareness campaigns, and online marketing 
+            to boost visibility and engagement.
+        </p>
+    </div>
+
+    <!-- Service 6: Content Writing -->
+    <div class="card text-center scale-in stagger-animation p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition">
+        <div class="service-icon mb-4">
+            <i class="fas fa-pen-fancy text-blue-600 text-5xl"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Content Writing</h3>
+        <p class="text-gray-600">
+            Engaging and impactful content writing for blogs, websites, and 
+            promotional materials that connect with audiences.
+        </p>
+    </div>
+</div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="container">
+            <h2 class="section-title fade-in">Get In Touch</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="fade-in">
+                    <h3 class="text-2xl font-bold mb-6 text-blue-600">Let's Work Together</h3>
+                    <p class="text-gray-600 mb-8">
+                        I'm always interested in new opportunities and exciting projects. 
+                        Whether you need a new website, want to improve an existing one, 
+                        or have a custom project in mind, I'd love to hear from you.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Email</h4>
+                                <p class="text-gray-600">francisfortune62@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Phone</h4>
+                                <p class="text-gray-600">
+<a href="tel:+2349034558222">2349034558222</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Location</h4>
+                                <p class="text-gray-600">Enugu, Nigeria</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                       <a href="https://www.facebook.com/yourusername" target="_blank" class="social-link">
+    <i class="fab fa-facebook-f"></i>
+</a>
+<a href="mailto:francisfortune62@gmail.com" class="social-link">
+    <i class="fas fa-envelope"></i>
+</a>
+<a href="https://wa.me/+2349034558222" target="_blank" class="social-link">
+    <i class="fab fa-whatsapp"></i>
+</a>
+<a href="https://www.linkedin.com/in/francis-fortune-a1ba31323/" target="_blank" class="social-link">
+    <i class="fab fa-linkedin-in"></i>
+</a>
+<!-- Call -->
+<a href="tel:+2349034558222" class="social-link">
+    <i class="fas fa-phone"></i>
+</a>
+
+
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="contact-form">
+                        <h3 class="text-xl font-bold mb-6 text-blue-600">Send Me a Message</h3>
+                        
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" id="name" name="name" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" id="subject" name="subject" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea id="message" name="message" rows="5" class="form-input" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-full">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white py-8">
+        <div class="container">
+            <div class="text-center">
+                <p>&copy; 2023 Francis Fortune. All rights reserved.</p>
+                <p class="mt-2 text-blue-200">Built with passion and modern web technologies</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close mobile menu when clicking on links
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        const navLinks = document.querySelectorAll('a[href^="#"]');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    const offsetTop = targetSection.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Active navigation link highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const desktopNavLinks = document.querySelectorAll('.nav-link');
+        
+        function updateActiveNavLink() {
+            const scrollPosition = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    desktopNavLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveNavLink);
+        
+        // Advanced scroll animations
+        const animationElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in, .rotate-in');
+        
+        function checkAnimationElements() {
+            animationElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        // Scroll progress bar
+        function updateProgressBar() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        }
+        
+        // Navbar scroll effect
+        function updateNavbar() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+        
+        window.addEventListener('scroll', () => {
+            checkAnimationElements();
+            updateProgressBar();
+            updateNavbar();
+        });
+        
+        checkAnimationElements(); // Check on page load
+        
+        // Animate skill bars when they come into view
+        const skillBars = document.querySelectorAll('.skill-progress');
+        
+        function animateSkillBars() {
+            skillBars.forEach(bar => {
+                const barTop = bar.getBoundingClientRect().top;
+                
+                if (barTop < window.innerHeight - 100) {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 200);
+                }
+            });
+        }
+        
+        let skillsAnimated = false;
+        window.addEventListener('scroll', () => {
+            if (!skillsAnimated) {
+                const skillsSection = document.getElementById('skills');
+                const skillsTop = skillsSection.getBoundingClientRect().top;
+                
+                if (skillsTop < window.innerHeight - 200) {
+                    animateSkillBars();
+                    skillsAnimated = true;
+                }
+            }
+        });
+        
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Simple validation
+            if (name && email && subject && message) {
+                // Simulate form submission
+                alert(`Thank you, ${name}! Your message has been sent. I'll get back to you soon.`);
+                contactForm.reset();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+        
+        // Typewriter effect
+        const typewriterElement = document.getElementById('typewriter');
+        const roles = [
+            'Frontend Developer',
+            'Graphics Designer', 
+            'Gen AI Engineer',
+            'Digital Marketer',
+            'Videographer & Editor',
+            'Content Writer'
+        ];
+        
+        let currentRoleIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
+        
+        function typeWriter() {
+            const currentRole = roles[currentRoleIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentRole.substring(0, currentCharIndex - 1);
+                currentCharIndex--;
+                typeSpeed = 50;
+            } else {
+                typewriterElement.textContent = currentRole.substring(0, currentCharIndex + 1);
+                currentCharIndex++;
+                typeSpeed = 100;
+            }
+            
+            if (!isDeleting && currentCharIndex === currentRole.length) {
+                typeSpeed = 2000; // Pause at end
+                isDeleting = true;
+            } else if (isDeleting && currentCharIndex === 0) {
+                isDeleting = false;
+                currentRoleIndex = (currentRoleIndex + 1) % roles.length;
+                typeSpeed = 500; // Pause before next word
+            }
+            
+            setTimeout(typeWriter, typeSpeed);
+        }
+        
+        // Initialize animations on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add a small delay to ensure smooth loading
+            setTimeout(() => {
+                checkAnimationElements();
+                updateProgressBar();
+                updateNavbar();
+                typeWriter(); // Start typewriter effect
+            }, 100);
+            
+            // Add intersection observer for better performance
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+                
+                animationElements.forEach(element => {
+                    observer.observe(element);
+                });
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'978e8d4575356fc4',t:'MTc1NjgzMjMwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
