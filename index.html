@@ -14,7 +14,12 @@
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://skillup-lab.github.io/Acadence/">
 <meta property="og:site_name" content="Acadence">
-
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="images/favicon.png">
  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
@@ -204,7 +209,7 @@ font-size: 1.1rem;
         </div>
     </nav>
 
-    <!-- Hero Section -->
+<!--     Hero Section 
     <section id="home" class="bg-navy min-h-screen flex items-center pt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -234,7 +239,80 @@ Acadence connects students, parents, teachers, and organizations to the best lea
             </div>
         </div>
     </section>
+ -->
+<!-- Hero Section -->
+<section id="home" class="bg-navy min-h-screen flex items-center pt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
+      <!-- LEFT: Carousel Content -->
+      <div class="slide-in-left">
+        <!-- Swiper -->
+        <div class="swiper myHeroSwiper">
+          <div class="swiper-wrapper">
+            
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+              <h1 class="text-4xl md:text-6xl font-bold text-accent mb-6 leading-tight">
+                Learn, Teach, Grow — All in One Place
+              </h1>
+              <p class="text-xl text-accent/90 mb-8 leading-relaxed">
+                Acadence connects students, parents, teachers, and organizations to the best learning experiences – from private tutoring to online courses and community programs.
+              </p>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+              <h1 class="text-4xl md:text-6xl font-bold text-accent mb-6 leading-tight">
+                Unlock Your Potential with Expert Mentors
+              </h1>
+              <p class="text-xl text-accent/90 mb-8 leading-relaxed">
+                Join thousands of learners who are discovering new skills, advancing their careers, and achieving their goals with Acadence.
+              </p>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+              <h1 class="text-4xl md:text-6xl font-bold text-accent mb-6 leading-tight">
+                Share Knowledge, Inspire Change
+              </h1>
+              <p class="text-xl text-accent/90 mb-8 leading-relaxed">
+                Become a teacher or partner with Acadence and transform education by sharing what you know with a global audience.
+              </p>
+            </div>
+          </div>
+
+          <!-- Swiper Pagination + Navigation -->
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+
+        <!-- Buttons (Static) -->
+        <div class="flex flex-col sm:flex-row gap-4 mt-8">
+          <button class="bg-accent text-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent/90 transition-all transform hover:scale-105 shadow-lg">
+            <a href="signup.html"> Join as Student</a>
+          </button>
+          <button class="border-2 border-accent text-accent px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent hover:text-navy transition-all transform hover:scale-105">
+            <a href="signup.html">Join as Teacher</a>
+          </button>
+          <button class="bg-accent text-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent/90 transition-all transform hover:scale-105 shadow-lg">
+            <a href="signup.html">Partner</a>
+          </button>
+        </div>
+      </div>
+
+      <!-- RIGHT: Image -->
+      <div class="slide-in-right">
+        <div class="relative home-right">
+          <img src="images/herobg.jpg" alt="Hero Background">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+    
     <!-- Features Section -->
     <section id="features" class="py-20 bg-accent">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -661,7 +739,23 @@ Acadence connects students, parents, teachers, and organizations to the best lea
                 heroSvg.style.transform = `translateY(${Math.sin(Date.now() * 0.001) * 10}px)`;
             }, 16);
         }
+          const swiper = new Swiper(".myHeroSwiper", {
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96f5b0e99682c418',t:'MTc1NTIyOTQ0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
