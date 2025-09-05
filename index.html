@@ -153,7 +153,6 @@ font-size: 1.1rem;
             background: url(images/test2.webp);
             background-repeat: no-repeat;
             background-size: cover;
-             color:blue;
          }
      
         }
@@ -244,61 +243,71 @@ Acadence connects students, parents, teachers, and organizations to the best lea
 <!-- Hero Section -->
 <section id="home" class="bg-navy min-h-screen flex items-center pt-16">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="grid grid-cols-1 gap-12 items-center">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-      <!-- Swiper -->
-      <div class="swiper myHeroSwiper w-full">
-        <div class="swiper-wrapper">
+      <!-- LEFT: Carousel Content -->
+      <div class="slide-in-left">
+        <!-- Swiper -->
+        <div class="swiper myHeroSwiper">
+          <div class="swiper-wrapper">
+            
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+              <h1 class="text-4xl md:text-6xl font-bold text-accent mb-6 leading-tight">
+                Learn, Teach, Grow — All in One Place
+              </h1>
+              <p class="text-xl text-accent/90 mb-8 leading-relaxed">
+                Acadence connects students, parents, teachers, and organizations to the best learning experiences – from private tutoring to online courses and community programs.
+              </p>
+            </div>
 
-          <!-- Slide 1 -->
-          <div class="swiper-slide text-white p-10 rounded-2xl shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Learn, Teach, Grow — All in One Place
-            </h1>
-            <p class="text-xl mb-8 leading-relaxed">
-              Acadence connects students, parents, teachers, and organizations to the best learning experiences – from private tutoring to online courses and community programs.
-            </p>
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+              <h1 class="text-4xl md:text-6xl font-bold text-accent mb-6 leading-tight">
+                Unlock Your Potential with Expert Mentors
+              </h1>
+              <p class="text-xl text-accent/90 mb-8 leading-relaxed">
+                Join thousands of learners who are discovering new skills, advancing their careers, and achieving their goals with Acadence.
+              </p>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+              <h1 class="text-4xl md:text-6xl font-bold text-accent mb-6 leading-tight">
+                Share Knowledge, Inspire Change
+              </h1>
+              <p class="text-xl text-accent/90 mb-8 leading-relaxed">
+                Become a teacher or partner with Acadence and transform education by sharing what you know with a global audience.
+              </p>
+            </div>
           </div>
 
-          <!-- Slide 2 -->
-          <div class="swiper-slide text-white p-10 rounded-2xl shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Unlock Your Potential with Expert Mentors
-            </h1>
-            <p class="text-xl mb-8 leading-relaxed">
-              Join thousands of learners who are discovering new skills, advancing their careers, and achieving their goals with Acadence.
-            </p>
-          </div>
+        </div>
 
-          <!-- Slide 3 -->
-          <div class="swiper-slide text-white p-10 rounded-2xl shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Share Knowledge, Inspire Change
-            </h1>
-            <p class="text-xl mb-8 leading-relaxed">
-              Become a teacher or partner with Acadence and transform education by sharing what you know with a global audience.
-            </p>
-          </div>
+        <!-- Buttons (Static) -->
+        <div class="flex flex-col sm:flex-row gap-4 mt-8">
+          <button class="bg-accent text-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent/90 transition-all transform hover:scale-105 shadow-lg">
+            <a href="signup.html"> Join as Student</a>
+          </button>
+          <button class="border-2 border-accent text-accent px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent hover:text-navy transition-all transform hover:scale-105">
+            <a href="signup.html">Join as Teacher</a>
+          </button>
+          <button class="bg-accent text-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent/90 transition-all transform hover:scale-105 shadow-lg">
+            <a href="signup.html">Partner</a>
+          </button>
         </div>
       </div>
 
-      <!-- Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 mt-8">
-        <button class="bg-accent text-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent/90 transition-all transform hover:scale-105 shadow-lg">
-          <a href="signup.html"> Join as Student</a>
-        </button>
-        <button class="border-2 border-accent text-accent px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent hover:text-navy transition-all transform hover:scale-105">
-          <a href="signup.html">Join as Teacher</a>
-        </button>
-        <button class="bg-accent text-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent/90 transition-all transform hover:scale-105 shadow-lg">
-          <a href="signup.html">Partner</a>
-        </button>
+      <!-- RIGHT: Image -->
+      <div class="slide-in-right">
+        <div class="relative home-right">
+          <img src="images/herobg.jpg" alt="Hero Background">
+        </div>
       </div>
 
     </div>
   </div>
-</section>    
-
+</section>
     
     <!-- Features Section -->
     <section id="features" class="py-20 bg-accent">
